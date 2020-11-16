@@ -9,5 +9,10 @@ namespace Shadow.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public ICollection<ProjectUser> ProjectUsers { get; set; }
+        public Project()
+        {
+            ProjectUsers = new HashSet<ProjectUser>();
+        }
     }
 }

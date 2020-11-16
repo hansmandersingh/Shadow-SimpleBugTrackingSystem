@@ -14,5 +14,11 @@ namespace Shadow.Models
         public DateTime? Updated { get; set; }
         public int ProjectId { get; set; }
         public Project Project { get; set; }
+        public int TicketStatusId { get; set; }
+        public TicketStatus TicketStatus { get; set; }
+        public int TicketPrioritieId { get; set; }
+        public TicketPrioritie TicketPrioritie { get; set; }
+        public int TicketTypeId { get; set; }
+        public TicketType TicketType { get; set; }
     }
 }

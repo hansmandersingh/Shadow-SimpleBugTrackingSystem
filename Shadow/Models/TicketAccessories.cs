@@ -5,16 +5,27 @@ using System.Web;
 
 namespace Shadow.Models
 {
-    public class Project
+    public class TicketAccessories
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public virtual ICollection<ProjectUser> ProjectUsers { get; set; }
         public virtual ICollection<Ticket> Tickets { get; set; }
-        public Project()
+        public TicketAccessories()
         {
-            ProjectUsers = new HashSet<ProjectUser>();
             Tickets = new HashSet<Ticket>();
         }
+    }
+
+    public class TicketStatus : TicketAccessories
+    {
+
+    }
+    public class TicketPrioritie : TicketAccessories
+    {
+
+    }
+    public class TicketType : TicketAccessories
+    {
+
     }
 }

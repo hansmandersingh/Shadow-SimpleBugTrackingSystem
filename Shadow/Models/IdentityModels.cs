@@ -29,6 +29,10 @@ namespace Shadow.Models
     {
         public DbSet<Project> Projects { get; set; }
         public DbSet<ProjectUser> ProjectUsers { get; set; }
+        public DbSet<Ticket> Tickets { get; set; }
+        public DbSet<TicketStatus> TicketStatuses { get; set; }
+        public DbSet<TicketPrioritie> TicketPriorities { get; set; }
+        public DbSet<TicketType> TicketTypes { get; set; }
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {

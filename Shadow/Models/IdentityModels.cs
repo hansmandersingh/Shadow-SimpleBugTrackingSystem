@@ -32,6 +32,22 @@ namespace Shadow.Models
             return userIdentity;
         }
     }
+    public class Submitter : ApplicationUser
+    {
+        public virtual ICollection<Ticket> Tickets { get; set; }
+        public Submitter()
+        {
+            Tickets = new HashSet<Ticket>();
+        }
+    }
+    public class Developer : ApplicationUser
+    {
+        public virtual ICollection<Ticket> Tickets { get; set; }
+        public Developer()
+        {
+            Tickets = new HashSet<Ticket>();
+        }
+    }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {

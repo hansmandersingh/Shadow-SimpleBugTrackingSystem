@@ -197,6 +197,10 @@
     <Compile Include="Migrations\202011160535110_AddedTicketAddonsAndRelations.Designer.cs">
       <DependentUpon>202011160535110_AddedTicketAddonsAndRelations.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202011160559419_TicketAndUserRelation.cs" />
+    <Compile Include="Migrations\202011160559419_TicketAndUserRelation.Designer.cs">
+      <DependentUpon>202011160559419_TicketAndUserRelation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -300,6 +304,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202011160535110_AddedTicketAddonsAndRelations.resx">
       <DependentUpon>202011160535110_AddedTicketAddonsAndRelations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011160559419_TicketAndUserRelation.resx">
+      <DependentUpon>202011160559419_TicketAndUserRelation.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -24,7 +25,10 @@ namespace Shadow.Models
         public virtual ICollection<TicketHistorie> TicketHistories { get; set; }
         public virtual ICollection<TicketComment> TicketComments { get; set; }
         public virtual ICollection<TicketAttachement> TicketAttachements { get; set; }
-
+        public string OwnerId { get; set; }
+        public Submitter Owner { get; set; }
+        public string AssignedToUserId { get; set; }
+        public Developer AssignedToUser { get; set; }
         public Ticket()
         {
             TicketNotifications = new HashSet<TicketNotification>();

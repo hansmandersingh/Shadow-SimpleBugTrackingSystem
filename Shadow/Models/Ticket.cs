@@ -20,5 +20,17 @@ namespace Shadow.Models
         public TicketPrioritie TicketPrioritie { get; set; }
         public int TicketTypeId { get; set; }
         public TicketType TicketType { get; set; }
+        public virtual ICollection<TicketNotification> TicketNotifications { get; set; }
+        public virtual ICollection<TicketHistorie> TicketHistories { get; set; }
+        public virtual ICollection<TicketComment> TicketComments { get; set; }
+        public virtual ICollection<TicketAttachement> TicketAttachements { get; set; }
+
+        public Ticket()
+        {
+            TicketNotifications = new HashSet<TicketNotification>();
+            TicketHistories = new HashSet<TicketHistorie>();
+            TicketComments = new HashSet<TicketComment>();
+            TicketAttachements = new HashSet<TicketAttachement>();
+        }
     }
 }

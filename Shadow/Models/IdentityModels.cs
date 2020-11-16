@@ -11,10 +11,18 @@ namespace Shadow.Models
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit https://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser
     {
-        public ICollection<ProjectUser> ProjectUsers { get; set; }
+        public virtual ICollection<ProjectUser> ProjectUsers { get; set; }
+        public virtual ICollection<TicketNotification> TicketNotifications { get; set; }
+        public virtual ICollection<TicketHistorie> TicketHistories { get; set; }
+        public virtual ICollection<TicketComment> TicketComments { get; set; }
+        public virtual ICollection<TicketAttachement> TicketAttachements { get; set; }
         public ApplicationUser()
         {
             ProjectUsers = new HashSet<ProjectUser>();
+            TicketNotifications = new HashSet<TicketNotification>();
+            TicketHistories = new HashSet<TicketHistorie>();
+            TicketComments = new HashSet<TicketComment>();
+            TicketAttachements = new HashSet<TicketAttachement>();
         }
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
@@ -33,6 +41,10 @@ namespace Shadow.Models
         public DbSet<TicketStatus> TicketStatuses { get; set; }
         public DbSet<TicketPrioritie> TicketPriorities { get; set; }
         public DbSet<TicketType> TicketTypes { get; set; }
+        public DbSet<TicketNotification> TicketNotifications { get; set; }
+        public DbSet<TicketHistorie> TicketHistories { get; set; }
+        public DbSet<TicketAttachement> TicketAttachements { get; set; }
+        public DbSet<TicketComment> TicketComments { get; set; }
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {

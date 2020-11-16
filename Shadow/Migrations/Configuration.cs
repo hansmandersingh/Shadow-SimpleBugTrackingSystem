@@ -61,6 +61,22 @@ namespace Shadow.Migrations
                     submitterRole = new IdentityRole("admin");
                     roleManager.Create(submitterRole);
                 }
+
+                //admin test user added here 
+                var adminUser = userManager.FindByName("admin@admin.net");
+                if (adminUser == null)
+                {
+                    var newUser = new ApplicationUser()
+                    {
+                        UserName = "admin@admin.net",
+                        Email = "admin@admin.net",
+                        PhoneNumber = "010101010101",
+                    };
+
+                    userManager.Create(newUser, "Password@1");
+                    userManager.SetLockoutEnabled(newUser.Id, false);
+                    userManager.AddToRole(newUser.Id, "admin");
+                }
             }
         }
     }

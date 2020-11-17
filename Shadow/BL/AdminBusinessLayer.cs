@@ -93,12 +93,27 @@ namespace Shadow.BL
         {
             List<Project> projects = new List<Project>();
 
-            if (UserAndRolesRepository.CheckIfUserIsInRole(userId, "admin") || UserAndRolesRepository.CheckIfUserIsInRole(userId, "project manager"))
+            if (UserAndRolesRepository.CheckIfUserIsInRole(userId, "admin"))
             {
                 projects = ProjectRepository.ListProjects();
                 return projects;
             } else
                 return projects;
+        }
+
+        public bool AssignUserToAProject(string adminId, string userId, int projectId)
+        {
+            if (UserAndRolesRepository.CheckIfUserIsInRole(adminId, "admin"))
+            {
+                var result = ProjectRepository.AssignUserToProject(userId, projectId);
+
+                if (result)
+                    return true;
+                else
+                    return false;
+            }
+            else
+                return false;
         }
     }
 }

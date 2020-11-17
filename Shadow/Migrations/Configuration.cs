@@ -42,7 +42,7 @@ namespace Shadow.Migrations
                 var projectManagerRole = roleManager.FindByName("project manager");
                 if (projectManagerRole == null)
                 {
-                    projectManagerRole = new IdentityRole("admin");
+                    projectManagerRole = new IdentityRole("project manager");
                     roleManager.Create(projectManagerRole);
                 }
 
@@ -50,7 +50,7 @@ namespace Shadow.Migrations
                 var developerRole = roleManager.FindByName("developer");
                 if (developerRole == null)
                 {
-                    developerRole = new IdentityRole("admin");
+                    developerRole = new IdentityRole("developer");
                     roleManager.Create(developerRole);
                 }
 
@@ -58,7 +58,7 @@ namespace Shadow.Migrations
                 var submitterRole = roleManager.FindByName("submitter");
                 if (submitterRole == null)
                 {
-                    submitterRole = new IdentityRole("admin");
+                    submitterRole = new IdentityRole("submitter");
                     roleManager.Create(submitterRole);
                 }
 

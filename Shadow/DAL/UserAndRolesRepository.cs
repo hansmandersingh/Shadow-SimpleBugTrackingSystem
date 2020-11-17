@@ -9,18 +9,18 @@ using System.Web;
 
 namespace Shadow.DAL
 {
-    public static class UserAndRolesRepository
+    public class UserAndRolesRepository
     {
         private static ApplicationDbContext db = new ApplicationDbContext();
 
-        private static UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
-        private static RoleManager<IdentityRole> roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
+        private UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+        private RoleManager<IdentityRole> roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
 
-        public static List<ApplicationUser> GetAllUsers()
+        public List<ApplicationUser> GetAllUsers()
         {
             return db.Users.Include(r => r.Roles).ToList();
         }
-        public static bool AddUser(string Email, string pwdHash)// requires Email and pwd in hash format to work.
+        public bool AddUser(string Email, string pwdHash)// requires Email and pwd in hash format to work.
         {
 
             var user = new ApplicationUser { UserName = Email, Email = Email };
@@ -37,7 +37,7 @@ namespace Shadow.DAL
             }
         }
 
-        public static bool DeleteUser(string UserId)
+        public bool DeleteUser(string UserId)
         {
             var user = db.Users.Find(UserId);
 
@@ -60,7 +60,7 @@ namespace Shadow.DAL
             }
         }
 
-        public static bool UpdateUser(ApplicationUser user)
+        public bool UpdateUser(ApplicationUser user)
         {
             var userToUpdate = userManager.FindById(user.Id);
 
@@ -83,11 +83,11 @@ namespace Shadow.DAL
                 return false;
             }
         }
-        public static List<string> GetAllRolesForUser(string userId)
+        public List<string> GetAllRolesForUser(string userId)
         {
             return userManager.GetRoles(userId).ToList();
         }
-        public static bool AssignRoleToUser(string userId, string roleName)
+        public bool AssignRoleToUser(string userId, string roleName)
         {
             roleName = roleName.ToLower();
             var result = userManager.AddToRole(userId, roleName);
@@ -101,7 +101,7 @@ namespace Shadow.DAL
                 return false;
             }
         }
-        public static bool DeleteUserFromRole(string userId, string roleName)
+        public bool DeleteUserFromRole(string userId, string roleName)
         {
             roleName = roleName.ToLower();
             if (roleManager.RoleExists(roleName) && userManager.FindById(userId) != null)
@@ -129,14 +129,14 @@ namespace Shadow.DAL
                 return false;
             }
         }
-        public static bool CheckIfUserIsInRole(string userId, string roleName)
+        public bool CheckIfUserIsInRole(string userId, string roleName)
         {
 
             roleName = roleName.ToLower();
             return userManager.IsInRole(userId, roleName);
         }
 
-        public static bool CreateRole(string roleName)
+        public bool CreateRole(string roleName)
         {
             roleName = roleName.ToLower();
             if (roleManager.RoleExists(roleName))
@@ -158,7 +158,7 @@ namespace Shadow.DAL
             }
         }
 
-        public static bool DeleteRole(string roleName)
+        public bool DeleteRole(string roleName)
         {
             roleName = roleName.ToLower();
             if (roleManager.RoleExists(roleName))

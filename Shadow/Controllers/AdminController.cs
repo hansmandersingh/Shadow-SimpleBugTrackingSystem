@@ -83,5 +83,17 @@ namespace Shadow.Controllers
             else
                 return RedirectToAction("Index");
         }
+
+        public ActionResult AllProjectsByUser()
+        {
+            var projects = AdminBusinessLayer.GetAllofMyProjects(User.Identity.GetUserId());
+            return View(projects);
+        }
+
+        public ActionResult AllProjects()
+        {
+            var projects = AdminBusinessLayer.AllProject(User.Identity.GetUserId());
+            return View(projects);
+        }
     }
 }

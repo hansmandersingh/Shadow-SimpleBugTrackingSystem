@@ -34,7 +34,7 @@ namespace Shadow.BL
         {
             if (UserAndRolesRepository.CheckIfUserIsInRole(adminId, "admin"))
             {
-                if (!UserAndRolesRepository.CheckIfUserIsInRole(userId, roleName))
+                if (UserAndRolesRepository.CheckIfUserIsInRole(userId, roleName))
                 {
                     UserAndRolesRepository.DeleteUserFromRole(userId, roleName);
                     return true;

@@ -8,7 +8,7 @@ using Shadow.BL;
 
 namespace Shadow.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "admin")]
     public class AdminController : Controller
     {
         AdminBusinessLayer AdminBusinessLayer = new AdminBusinessLayer();
@@ -32,6 +32,25 @@ namespace Shadow.Controllers
                 return View();
             }
             return RedirectToAction("Index");
+        }
+        public ActionResult UnAssignRole()
+        {
+            ViewBag.UsersList = AdminBusinessLayer.GetAllUsers();
+            return View();
+        }
+        [HttpPost]
+        public ActionResult UnAssignRole(string userId, string roleName)
+        {
+            var result = AdminBusinessLayer.UnAssignUserFromRole(User.Identity.GetUserId(), userId, roleName);
+            ViewBag.UsersList = AdminBusinessLayer.GetAllUsers();
+            if (result)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
         }
     }
 }

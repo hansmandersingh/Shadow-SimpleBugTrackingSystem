@@ -115,5 +115,20 @@ namespace Shadow.BL
             else
                 return false;
         }
+
+        public bool UnAssignUserFromProject(string adminId, string userId, int projectId)
+        {
+            if (UserAndRolesRepository.CheckIfUserIsInRole(adminId, "admin"))
+            {
+                var result = ProjectRepository.UnAssignUserFromProject(userId, projectId);
+
+                if (result)
+                    return true;
+                else
+                    return false;
+            }
+            else
+                return false;
+        }
     }
 }

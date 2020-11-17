@@ -1,0 +1,15 @@
+﻿
+@{
+    ViewBag.Title = "UnAssignRole";
+}
+
+<h2>UnAssignRole</h2>
+
+@using (Html.BeginForm())
+{
+    <h4>Select User from the List :</h4> @Html.DropDownList("userId", new SelectList(ViewBag.UsersList, "Id", "UserName", "Id"))
+
+    <h4>Enter a role name to remove from: </h4> @Html.TextBox("roleName")
+
+    <input type="submit" name="Remove User from Role" value="Remove User from Role" />
+}

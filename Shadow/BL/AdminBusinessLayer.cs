@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Shadow.DAL;
+using Shadow.Models;
 
 namespace Shadow.BL
 {
@@ -47,6 +48,11 @@ namespace Shadow.BL
             {
                 return false;
             }
+        }
+
+        public List<ApplicationUser> GetAllUsers()
+        {
+            return UserAndRolesRepository.GetAllUsers();
         }
     }
 }

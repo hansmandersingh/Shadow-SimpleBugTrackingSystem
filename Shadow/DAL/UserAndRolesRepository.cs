@@ -94,6 +94,7 @@ namespace Shadow.DAL
 
             if (result.Succeeded)
             {
+                db.SaveChanges();
                 return true;
             }
             else

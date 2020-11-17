@@ -19,7 +19,7 @@ namespace Shadow.BL
                 {
                     UserAndRolesRepository.AssignRoleToUser(userId, roleName);
                     return true;
-                } 
+                }
                 else
                 {
                     return false;
@@ -70,12 +70,35 @@ namespace Shadow.BL
                 return false;
         }
 
-        public void EditProject(string adminId,Project project)
+        public bool EditProject(string adminId, Project project)
         {
             if (UserAndRolesRepository.CheckIfUserIsInRole(adminId, "admin"))
             {
-
+                var result = ProjectRepository.EditProject(project);
+                if (result)
+                    return true;
+                else
+                    return false;
             }
+            else
+                return false;
+        }
+
+        public List<Project> GetAllofMyProjects(string userId)
+        {
+            return ProjectRepository.ListProjects(userId);
+        }
+
+        public List<Project> AllProject(string userId)
+        {
+            List<Project> projects = new List<Project>();
+
+            if (UserAndRolesRepository.CheckIfUserIsInRole(userId, "admin") || UserAndRolesRepository.CheckIfUserIsInRole(userId, "project manager"))
+            {
+                projects = ProjectRepository.ListProjects();
+                return projects;
+            } else
+                return projects;
         }
     }
 }

@@ -52,5 +52,19 @@ namespace Shadow.Controllers
                 return RedirectToAction("Index");
             }
         }
+
+        public ActionResult CreateAProject()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult CreateAProject(string projectName)
+        {
+            var result = AdminBusinessLayer.AddANewProject(User.Identity.GetUserId(), projectName);
+            if (result)
+                return View();
+            else
+                return RedirectToAction("Index");
+        }
     }
 }

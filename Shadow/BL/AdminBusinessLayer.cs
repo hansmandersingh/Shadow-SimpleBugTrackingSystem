@@ -101,6 +101,11 @@ namespace Shadow.BL
                 return projects;
         }
 
+        public Project GetProject(int projectId)
+        {
+            return ProjectRepository.GetAProject(projectId);
+        }
+
         public bool AssignUserToAProject(string adminId, string userId, int projectId)
         {
             if (UserAndRolesRepository.CheckIfUserIsInRole(adminId, "admin"))

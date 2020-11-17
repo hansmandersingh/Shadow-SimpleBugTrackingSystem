@@ -55,6 +55,11 @@ namespace Shadow.DAL
             return db.ProjectUsers.Where(p => p.UserId == userId).Select(s => s.Project).ToList();
         }
 
+        public Project GetAProject(int projectId)
+        {
+            return db.Projects.Include(p => p.ProjectUsers).Include(p => p.Tickets).FirstOrDefault(p => p.Id == projectId);
+        }
+
         public bool AssignUserToProject(string userId, int projectId)
         {
             var project = db.Projects.Find(projectId);

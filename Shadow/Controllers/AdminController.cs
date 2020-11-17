@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Shadow.BL;
+using Shadow.Models;
 
 namespace Shadow.Controllers
 {
@@ -63,6 +64,22 @@ namespace Shadow.Controllers
             var result = AdminBusinessLayer.AddANewProject(User.Identity.GetUserId(), projectName);
             if (result)
                 return View();
+            else
+                return RedirectToAction("Index");
+        }
+
+        public ActionResult EditProject(int projectId)
+        {
+            var project = AdminBusinessLayer.GetProject(projectId);
+            return View(project);
+        }
+        [HttpPost]
+        public ActionResult EditProject(int projectId, Project project)
+        {
+            var result = AdminBusinessLayer.EditProject(User.Identity.GetUserId(), project);
+
+            if (result)
+                return View(project);
             else
                 return RedirectToAction("Index");
         }

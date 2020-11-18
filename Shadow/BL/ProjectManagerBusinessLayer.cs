@@ -11,6 +11,7 @@ namespace Shadow.BL
     {
         UserAndRolesRepository UserAndRolesRepository = new UserAndRolesRepository();
         ProjectRepository ProjectRepository = new ProjectRepository();
+        TicketRepository TicketRepository = new TicketRepository();
 
         public bool AddANewProject(string projectManagerId, string projectName)
         {
@@ -58,6 +59,16 @@ namespace Shadow.BL
                 return projects;
         }
 
+        public Project GetProject(int projectId)
+        {
+            return ProjectRepository.GetAProject(projectId);
+        }
+
+        public List<ApplicationUser> GetAllUsers()
+        {
+            return UserAndRolesRepository.GetAllUsers();
+        }
+
         public bool AssignUserToAProject(string projectMgrId, string userId, int projectId)
         {
             if (UserAndRolesRepository.CheckIfUserIsInRole(projectMgrId, "project manager"))
@@ -86,6 +97,18 @@ namespace Shadow.BL
             }
             else
                 return false;
+        }
+
+        public List<Ticket> GetAllTickets(string userId)
+        {
+            List<Ticket> tickets = new List<Ticket>();
+
+            if (UserAndRolesRepository.CheckIfUserIsInRole(userId, "project manager"))
+            {
+                tickets = TicketRepository.GetAllTicketsFromProject(userId);
+            }
+
+            return tickets;
         }
     }
 }

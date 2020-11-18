@@ -77,6 +77,44 @@ namespace Shadow.Migrations
                     userManager.SetLockoutEnabled(newUser.Id, false);
                     userManager.AddToRole(newUser.Id, "admin");
                 }
+
+                //Seeding Ticket-- AddOns
+                var ticketTypes = context.TicketTypes.Any();
+                if(ticketTypes == false)
+                {
+                    TicketType BugTicket = new TicketType() { Name = "Bug" };
+                    TicketType ErrorTicket = new TicketType() { Name = "Error" };
+
+                    context.TicketTypes.Add(BugTicket);
+                    context.TicketTypes.Add(ErrorTicket);
+                    context.SaveChanges();
+                }
+
+                var ticketPriorities = context.TicketPriorities.Any();
+                if(ticketPriorities == false)
+                {
+                    TicketPrioritie Low = new TicketPrioritie() { Name = "Low" };
+                    TicketPrioritie Medium = new TicketPrioritie() { Name = "Medium" };
+                    TicketPrioritie High = new TicketPrioritie() { Name = "High" };
+
+                    context.TicketPriorities.Add(Low);
+                    context.TicketPriorities.Add(Medium);
+                    context.TicketPriorities.Add(High);
+                    context.SaveChanges();
+                }
+
+                var ticketStatus = context.TicketStatuses.Any();
+                if(ticketStatus == false)
+                {
+                    TicketStatus NotFixed = new TicketStatus() { Name = "Not Fixed" };
+                    TicketStatus Fixed = new TicketStatus() { Name = "Fixed" };
+                    TicketStatus BeingFixed = new TicketStatus() { Name = "Being Fixed" };
+
+                    context.TicketStatuses.Add(NotFixed);
+                    context.TicketStatuses.Add(Fixed);
+                    context.TicketStatuses.Add(BeingFixed);
+                    context.SaveChanges();
+                }
             }
         }
     }

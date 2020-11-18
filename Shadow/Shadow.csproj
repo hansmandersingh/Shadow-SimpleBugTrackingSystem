@@ -168,8 +168,10 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="BL\AdminBusinessLayer.cs" />
+    <Compile Include="BL\DeveloperBusinessLayer.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\DevelopersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="DAL\ProjectRepository.cs" />
@@ -282,6 +284,12 @@
     <Content Include="Views\Admin\AllProjects.cshtml" />
     <Content Include="Views\Admin\AssignToProject.cshtml" />
     <Content Include="Views\Admin\UnAssignFromProject.cshtml" />
+    <Content Include="Views\Developers\Create.cshtml" />
+    <Content Include="Views\Developers\Delete.cshtml" />
+    <Content Include="Views\Developers\Details.cshtml" />
+    <Content Include="Views\Developers\Edit.cshtml" />
+    <Content Include="Views\Developers\Index.cshtml" />
+    <Content Include="Views\Developers\AllProject.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

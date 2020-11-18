@@ -10,7 +10,7 @@ namespace Shadow.DAL
     public class TicketRepository
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-        public bool CreateTicket(string title, string ownerId, int projectId, string description)
+        public bool CreateTicket(string title, string ownerId, int projectId, string description, int ticketTypeId, int ticketPrioritiesId, int ticketStatusId)
         {
             Ticket ticket = new Ticket()
             {
@@ -18,7 +18,10 @@ namespace Shadow.DAL
                 Created = DateTime.Now,
                 OwnerId = ownerId,
                 ProjectId = projectId,
-                Description = description
+                Description = description,
+                TicketTypeId = ticketTypeId,
+                TicketPrioritieId = ticketPrioritiesId,
+                TicketStatusId = ticketStatusId
             };
 
             if(!db.Tickets.Any(t => t.Title == ticket.Title))
@@ -81,6 +84,21 @@ namespace Shadow.DAL
             {
                 return false;
             }
+        }
+
+        public List<TicketType> AllTicketTypes()
+        {
+            return db.TicketTypes.ToList();
+        }
+
+        public List<TicketPrioritie> TicketPriorities()
+        {
+            return db.TicketPriorities.ToList();
+        }
+
+        public List<TicketStatus> TicketStatuses()
+        {
+            return db.TicketStatuses.ToList();
         }
     }
 }

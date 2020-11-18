@@ -10,6 +10,9 @@
     <h4>Please enter a ticket title: </h4> @Html.TextBox("title")
     <h4>Select project from the list: </h4> @Html.DropDownList("projectId", new SelectList(ViewBag.ProjectList, "Id", "Name", "Id"))
     <h4>Please enter description: </h4> @Html.TextArea("description")
+    <h4>Please select ticket type: </h4> @Html.DropDownList("ticketTypeId", new SelectList(ViewBag.TicketTypes, "Id", "Name", "Id"))
+    <h4>Please set Priority for the ticket : </h4> @Html.DropDownList("ticketPrioritiesId", new SelectList(ViewBag.TicketPriorities, "Id", "Name", "Id"))
+    <h4>Please set Initial Ticket Status: </h4> @Html.DropDownList("ticketStatusId", new SelectList(ViewBag.TicketStatuses, "Id", "Name", "Id"))
 
     <input type="submit" value="Add" name="Add"/>
 }

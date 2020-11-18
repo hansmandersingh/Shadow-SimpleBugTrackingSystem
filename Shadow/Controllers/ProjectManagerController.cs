@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace Shadow.Controllers
 {
+    [Authorize(Roles ="project manager")]
     public class ProjectManagerController : Controller
     {
         AdminBusinessLayer AdminBusinessLayer = new AdminBusinessLayer();

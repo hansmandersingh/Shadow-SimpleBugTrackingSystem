@@ -285,6 +285,12 @@
     <Content Include="Views\Admin\AssignToProject.cshtml" />
     <Content Include="Views\Admin\UnAssignFromProject.cshtml" />
     <Content Include="Views\ProjectManager\Index.cshtml" />
+    <Content Include="Views\ProjectManager\CreateAProject.cshtml" />
+    <Content Include="Views\ProjectManager\EditProject.cshtml" />
+    <Content Include="Views\ProjectManager\AllProjectsByUser.cshtml" />
+    <Content Include="Views\ProjectManager\AllProjects.cshtml" />
+    <Content Include="Views\ProjectManager\AssignToProject.cshtml" />
+    <Content Include="Views\ProjectManager\UnAssignFromProject.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,15 @@
+﻿
+@{
+    ViewBag.Title = "CreateTicket";
+}
+
+<h2>Create Ticket</h2>
+
+@using (Html.BeginForm())
+{
+    <h4>Please enter a ticket title: </h4> @Html.TextBox("title")
+    <h4>Select project from the list: </h4> @Html.DropDownList("projectId", new SelectList(ViewBag.ProjectList, "Id", "Name", "Id"))
+    <h4>Please enter description: </h4> @Html.TextArea("description")
+
+    <input type="submit" value="Add" name="Add"/>
+}

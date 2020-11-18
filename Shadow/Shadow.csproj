@@ -169,11 +169,13 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="BL\AdminBusinessLayer.cs" />
     <Compile Include="BL\ProjectManagerBusinessLayer.cs" />
+    <Compile Include="BL\SubmitterBusinessLayer.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ProjectManagerController.cs" />
+    <Compile Include="Controllers\SubmittersController.cs" />
     <Compile Include="DAL\ProjectRepository.cs" />
     <Compile Include="DAL\TicketRepository.cs" />
     <Compile Include="DAL\UserAndRolesRepository.cs" />
@@ -292,6 +294,12 @@
     <Content Include="Views\ProjectManager\AllProjects.cshtml" />
     <Content Include="Views\ProjectManager\AssignToProject.cshtml" />
     <Content Include="Views\ProjectManager\UnAssignFromProject.cshtml" />
+    <Content Include="Views\Submitters\Create.cshtml" />
+    <Content Include="Views\Submitters\Delete.cshtml" />
+    <Content Include="Views\Submitters\Details.cshtml" />
+    <Content Include="Views\Submitters\Edit.cshtml" />
+    <Content Include="Views\Submitters\Index.cshtml" />
+    <Content Include="Views\Submitters\CreateTicket.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

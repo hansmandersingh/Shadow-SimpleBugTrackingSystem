@@ -1,0 +1,18 @@
+﻿model List<Shadow.Models.Project>
+    @{
+        ViewBag.Title = "AllProjectsByUser";
+    }
+
+    <h2>All Projects</h2>
+
+    @if (Model != null)
+    {
+        <ul>
+            @foreach (var pro in Model)
+            {
+                <li>
+                    @pro.Name
+                </li>
+            }
+        </ul>
+    }

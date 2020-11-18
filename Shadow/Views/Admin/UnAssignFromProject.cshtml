@@ -1,0 +1,14 @@
+﻿
+@{
+    ViewBag.Title = "UnAssignFromProject";
+}
+
+<h2>UnAssign User From a Project</h2>
+
+@using (Html.BeginForm())
+{
+    <h4>Select User from the List :</h4> @Html.DropDownList("userId", new SelectList(ViewBag.UserList, "Id", "UserName", "Id"))
+    <h4>Select Project from the List : </h4> @Html.DropDownList("projectId", new SelectList(ViewBag.ProjectList, "Id", "Name", "Id"))
+
+    <input type="submit" name="Remove" value="Remove" />
+}

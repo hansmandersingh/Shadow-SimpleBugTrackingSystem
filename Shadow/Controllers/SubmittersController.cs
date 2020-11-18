@@ -35,5 +35,11 @@ namespace Shadow.Controllers
             ViewBag.TicketStatuses = SubmitterBusinessLayer.TicketStatuses();
             return View();
         }
+
+        public ActionResult AllProjects()
+        {
+            var allProjects = SubmitterBusinessLayer.AllProject(User.Identity.GetUserId());
+            return View(allProjects);
+        }
     }
 }

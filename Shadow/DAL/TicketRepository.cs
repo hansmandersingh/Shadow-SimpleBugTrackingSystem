@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace Shadow.DAL
 {
@@ -68,6 +69,10 @@ namespace Shadow.DAL
         public Ticket GetTicket(int ticketId)
         {
             return db.Tickets.FirstOrDefault(t => t.Id == ticketId);
+        }
+        public List<Ticket> GetAllTickets()
+        {
+            return db.Tickets.ToList();
         }
 
         public bool DeleteTicket(int ticketId)

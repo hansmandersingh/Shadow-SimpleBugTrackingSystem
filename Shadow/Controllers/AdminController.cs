@@ -136,5 +136,10 @@ namespace Shadow.Controllers
             else
                 return RedirectToAction("Index");
         }
+
+        public ActionResult GetAllTickets()
+        {
+            return View(AdminBusinessLayer.GetAllTickets());
+        }
     }
 }

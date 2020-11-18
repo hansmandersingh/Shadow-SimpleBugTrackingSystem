@@ -72,7 +72,7 @@ namespace Shadow.DAL
 
         public List<Ticket> GetAllTickets()
         {
-            return db.Tickets.Include(i => i.Project).ToList();
+            return db.Tickets.Include(i => i.Project).Include(i => i.Owner).Include(i => i.TicketStatus).Include(i => i.TicketPrioritie).Include(i => i.AssignedToUser).ToList();
         }
 
         public bool DeleteTicket(int ticketId)

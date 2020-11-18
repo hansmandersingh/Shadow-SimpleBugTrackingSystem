@@ -116,5 +116,25 @@ namespace Shadow.Controllers
             else
                 return RedirectToAction("Index");
         }
+
+        public ActionResult UnAssignFromProject()
+        {
+            ViewBag.UserList = AdminBusinessLayer.GetAllUsers();
+            ViewBag.ProjectList = AdminBusinessLayer.AllProject(User.Identity.GetUserId());
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult UnAssignFromProject(string userId, int projectId)
+        {
+            var result = AdminBusinessLayer.UnAssignUserFromProject(User.Identity.GetUserId(), userId, projectId);
+
+            ViewBag.UserList = AdminBusinessLayer.GetAllUsers();
+            ViewBag.ProjectList = AdminBusinessLayer.AllProject(User.Identity.GetUserId());
+            if (result)
+                return View();
+            else
+                return RedirectToAction("Index");
+        }
     }
 }

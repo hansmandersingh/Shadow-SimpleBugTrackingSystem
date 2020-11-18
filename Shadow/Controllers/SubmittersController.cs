@@ -12,6 +12,7 @@ using Shadow.Models;
 
 namespace Shadow.Controllers
 {
+    [Authorize(Roles ="submitter")]
     public class SubmittersController : Controller
     {
         SubmitterBusinessLayer SubmitterBusinessLayer = new SubmitterBusinessLayer();

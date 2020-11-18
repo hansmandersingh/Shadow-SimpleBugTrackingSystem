@@ -70,6 +70,11 @@ namespace Shadow.DAL
             return db.Tickets.FirstOrDefault(t => t.Id == ticketId);
         }
 
+        public List<Ticket> GetAllTickets()
+        {
+            return db.Tickets.Include(i => i.Project).ToList();
+        }
+
         public bool DeleteTicket(int ticketId)
         {
             var ticket = db.Tickets.Find(ticketId);

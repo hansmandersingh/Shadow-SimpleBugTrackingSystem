@@ -24,9 +24,13 @@ namespace Shadow.DAL
                 TicketStatusId = ticketStatusId
             };
 
+            TicketHistorie history = new TicketHistorie() { UserId = ownerId, TicketId = ticket.Id, Property = "Initialized Ticket", OldValue = "-", NewValue = "-" };
+
             if(!db.Tickets.Any(t => t.Title == ticket.Title))
             {
+                ticket.TicketHistories.Add(history);
                 db.Tickets.Add(ticket);
+                db.TicketHistories.Add(history);
                 db.SaveChanges();
                 return true;
             } else

@@ -103,9 +103,23 @@ namespace Shadow.Controllers
                 return RedirectToAction("Index");
         }
 
-        public ActionResult GetAllTickets()
+        public ActionResult GetAllTickets(string sortOrder)
         {
-            return View(ProjectManagerBusinessLayer.GetAllTickets(User.Identity.GetUserId()));
+            List<Ticket> AllTickets;
+
+            switch (sortOrder)
+            {
+                case "OrderByAscending":
+                    AllTickets = ProjectManagerBusinessLayer.GetAllTickets(User.Identity.GetUserId()).OrderBy(a => a.Title).ToList();
+                    break;
+                case "OrderByDescending":
+                    AllTickets = ProjectManagerBusinessLayer.GetAllTickets(User.Identity.GetUserId()).OrderByDescending(d => d.Title).ToList();
+                    break;
+                default:
+                    AllTickets = ProjectManagerBusinessLayer.GetAllTickets(User.Identity.GetUserId());
+                    break;
+            }
+            return View(AllTickets);
         }
 
         public ActionResult EditTicket(int ticketId)

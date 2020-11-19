@@ -11,6 +11,7 @@ namespace Shadow.BL
     {
         UserAndRolesRepository UserAndRolesRepository = new UserAndRolesRepository();
         ProjectRepository ProjectRepository = new ProjectRepository();
+        TicketRepository TicketRepository = new TicketRepository();
         public bool AssignUserToRole(string adminId, string userId, string roleName)
         {
             if (UserAndRolesRepository.CheckIfUserIsInRole(adminId, "admin"))
@@ -134,6 +135,11 @@ namespace Shadow.BL
             }
             else
                 return false;
+        }
+
+        public List<Ticket> GetAllTickets()
+        {
+            return TicketRepository.GetAllTickets();
         }
     }
 }

@@ -48,5 +48,18 @@ namespace Shadow.BL
         {
             return TicketRepository.TicketStatuses();
         }
+
+        public List<Project> AllProject(string userId)
+        {
+            List<Project> projects = new List<Project>();
+
+            if (UserAndRolesRepository.CheckIfUserIsInRole(userId, "admin"))
+            {
+                projects = ProjectRepository.ListProjects();
+                return projects;
+            }
+            else
+                return projects;
+        }
     }
 }

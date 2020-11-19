@@ -296,18 +296,13 @@
     <Content Include="Views\ProjectManager\AllProjects.cshtml" />
     <Content Include="Views\ProjectManager\AssignToProject.cshtml" />
     <Content Include="Views\ProjectManager\UnAssignFromProject.cshtml" />
-    <Content Include="Views\Submitters\Create.cshtml" />
-    <Content Include="Views\Submitters\Delete.cshtml" />
-    <Content Include="Views\Submitters\Details.cshtml" />
-    <Content Include="Views\Submitters\Edit.cshtml" />
-    <Content Include="Views\Submitters\Index.cshtml" />
     <Content Include="Views\Submitters\CreateTicket.cshtml" />
-    <Content Include="Views\Developers\Create.cshtml" />
-    <Content Include="Views\Developers\Delete.cshtml" />
-    <Content Include="Views\Developers\Details.cshtml" />
-    <Content Include="Views\Developers\Edit.cshtml" />
-    <Content Include="Views\Developers\Index.cshtml" />
-    <Content Include="Views\Developers\AllProjects.cshtml" />
+    <Content Include="Views\Developers\AllProject.cshtml" />
+    <Content Include="Views\Submitters\AllProjects.cshtml" />
+    <Content Include="Views\Admin\GetAllTickets.cshtml" />
+    <Content Include="Views\ProjectManager\GetAllTickets.cshtml" />
+    <Content Include="Views\ProjectManager\EditTicket.cshtml" />
+    <Content Include="Views\ProjectManager\AssignTicketToDeveloper.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

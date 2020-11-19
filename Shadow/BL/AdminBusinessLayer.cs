@@ -161,5 +161,27 @@ namespace Shadow.BL
         {
             return TicketRepository.ShowAllComments(ticketId);
         }
+
+        public bool AddAttachment(string userId, int ticketId, string fileUrl, string filePath, string description)
+        {
+            if(UserAndRolesRepository.CheckIfUserIsInRole(userId, "admin"))
+            {
+                var result = TicketRepository.AddAttachment(userId, ticketId, fileUrl, filePath, description);
+
+                if (result)
+                    return true;
+                else
+                    return false;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public List<TicketAttachement> ShowAllAttachments(int ticketId)
+        {
+            return TicketRepository.ShowAllAttachments(ticketId);
+        }
     }
 }

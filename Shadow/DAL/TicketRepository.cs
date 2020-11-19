@@ -159,5 +159,10 @@ namespace Shadow.DAL
                 return false;
             }
         }
+
+        public List<TicketComment> ShowAllComments(int ticketId)
+        {
+            return db.TicketComments.Include(i => i.Ticket).Include(i => i.User).Where(t => t.TicketId == ticketId).ToList();
+        }
     }
 }

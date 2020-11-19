@@ -156,5 +156,10 @@ namespace Shadow.BL
             else
                 return false;
         }
+
+        public List<TicketComment> AllComments(int ticketId)
+        {
+            return TicketRepository.ShowAllComments(ticketId);
+        }
     }
 }

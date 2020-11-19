@@ -192,5 +192,10 @@ namespace Shadow.Controllers
             else
                 return View(ticketId);
         }
+
+        public ActionResult AllComments(int ticketId)
+        {
+            return View(AdminBusinessLayer.AllComments(ticketId));
+        }
     }
 }

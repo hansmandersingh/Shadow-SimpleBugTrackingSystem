@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -116,7 +117,7 @@ namespace Shadow.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-        public ActionResult AllProject()
+        public ActionResult AllProjects()
         {
             var projects = DeveloperBusinessLayer.AllProject(User.Identity.GetUserId());
             return View(projects);
@@ -129,6 +130,5 @@ namespace Shadow.Controllers
             }
             base.Dispose(disposing);
         }
-
     }
 }

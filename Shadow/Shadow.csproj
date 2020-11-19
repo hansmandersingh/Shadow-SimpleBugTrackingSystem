@@ -302,12 +302,12 @@
     <Content Include="Views\Submitters\Edit.cshtml" />
     <Content Include="Views\Submitters\Index.cshtml" />
     <Content Include="Views\Submitters\CreateTicket.cshtml" />
-    <Content Include="Views\Developers\AllProject.cshtml" />
     <Content Include="Views\Developers\Create.cshtml" />
     <Content Include="Views\Developers\Delete.cshtml" />
     <Content Include="Views\Developers\Details.cshtml" />
     <Content Include="Views\Developers\Edit.cshtml" />
     <Content Include="Views\Developers\Index.cshtml" />
+    <Content Include="Views\Developers\AllProjects.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

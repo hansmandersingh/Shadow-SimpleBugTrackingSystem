@@ -193,7 +193,7 @@ namespace Shadow.DAL
 
         public List<TicketAttachement> ShowAllAttachments(int ticketId)
         {
-            return db.TicketAttachements.Where(t => t.TicketId == ticketId).ToList();
+            return db.TicketAttachements.Include(i => i.User).Include(i => i.Ticket).Where(t => t.TicketId == ticketId).ToList();
         }
     }
 }

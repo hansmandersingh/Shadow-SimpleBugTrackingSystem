@@ -141,7 +141,7 @@ namespace Shadow.Controllers
             ViewBag.TicketTypeList = ProjectManagerBusinessLayer.TicketTypes();
 
             if (result)
-                return View(sendTicket);
+                return RedirectToAction("GetAllTickets");
             else
                 return RedirectToAction("Index");
         }

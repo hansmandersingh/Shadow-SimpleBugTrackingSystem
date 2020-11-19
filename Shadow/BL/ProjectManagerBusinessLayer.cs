@@ -143,5 +143,20 @@ namespace Shadow.BL
         {
             return TicketRepository.GetTicket(ticketId);
         }
+
+        public bool AssignToDeveloper(string managerId, int ticketId, string assignedToId)
+        {
+            if (UserAndRolesRepository.CheckIfUserIsInRole(managerId, "project manager"))
+            {
+                var result = TicketRepository.AssignToDeveloper(ticketId, assignedToId);
+
+                if (result)
+                    return true;
+                else
+                    return false;
+            }
+            else
+                return false;
+        }
     }
 }

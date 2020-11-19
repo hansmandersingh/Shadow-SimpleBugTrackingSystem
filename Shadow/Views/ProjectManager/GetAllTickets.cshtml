@@ -59,7 +59,9 @@ Order By: <p style="display:inline">@Html.ActionLink("Order by Ascending", "GetA
                 else
                 {
                     @Html.ActionLink("Assign to Developer", "AssignTicketToDeveloper", new { ticketId = item.Id }, null)
-                }
+                } |
+                @Html.ActionLink("Add a Comment", "AddComment", new { ticketId = item.Id }, null)
+                @if(item.TicketComments.Count != 0) { @Html.ActionLink("Show all comments", "ShowAllComments", new { ticketId = item.Id }, null) }
             </td>
         </tr>
     }

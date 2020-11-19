@@ -53,7 +53,7 @@ namespace Shadow.BL
         {
             List<Project> projects = new List<Project>();
 
-            if (UserAndRolesRepository.CheckIfUserIsInRole(userId, "admin"))
+            if (UserAndRolesRepository.CheckIfUserIsInRole(userId, "submitter"))
             {
                 projects = ProjectRepository.ListProjects();
                 return projects;
@@ -62,6 +62,16 @@ namespace Shadow.BL
                 return projects;
         }
 
-        
+        public List<Ticket> GetAllTickets(string userId)
+        {
+            List<Ticket> tickets = new List<Ticket>();
+
+            if (UserAndRolesRepository.CheckIfUserIsInRole(userId, "submitter"))
+            {
+                tickets = TicketRepository.GetAllTicketsFromProject(userId);
+            }
+
+            return tickets;
+        }
     }
 }

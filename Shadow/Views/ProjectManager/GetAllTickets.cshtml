@@ -1,0 +1,54 @@
+﻿@model IEnumerable<Shadow.Models.Ticket>
+
+@{
+    ViewBag.Title = "GetAllTickets";
+}
+
+<h2>All Tickets</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Created)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Updated)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Created)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Updated)
+        </td>
+        <td>
+            @Html.ActionLink("Edit Ticket", "EditTicket", new { ticketId = item.Id }, null) |
+            @if (item.AssignedToUserId != null)
+            {
+                @Html.ActionLink("UnAssign Task", "UnAssignTicket", new { ticketId = item.Id },null)
+            }
+            else
+            {
+                @Html.ActionLink("Assign to Developer", "AssignTicketToDeveloper", new { ticketId = item.Id }, null)
+            }
+        </td>
+    </tr>
+}
+
+</table>

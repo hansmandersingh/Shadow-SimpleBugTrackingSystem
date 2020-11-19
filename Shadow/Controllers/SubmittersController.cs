@@ -30,7 +30,8 @@ namespace Shadow.Controllers
         [HttpPost]
         public ActionResult CreateTicket(string title, int projectId, string description, int ticketTypeId, int ticketPrioritiesId, int ticketStatusId)
         {
-            SubmitterBusinessLayer.CreateTicket(title, User.Identity.GetUserId(), projectId, description, ticketTypeId, ticketPrioritiesId, ticketStatusId);
+            var userId = User.Identity.GetUserId();
+            SubmitterBusinessLayer.CreateTicket(title, userId, projectId, description, ticketTypeId, ticketPrioritiesId, ticketStatusId);
             ViewBag.ProjectList = SubmitterBusinessLayer.ListProjects(User.Identity.GetUserId());
             ViewBag.TicketTypes = SubmitterBusinessLayer.TicketTypes();
             ViewBag.TicketPriorities = SubmitterBusinessLayer.AllTicketPriorities();
@@ -46,8 +47,7 @@ namespace Shadow.Controllers
 
         public ActionResult AllTickets()
         {
-            var allTickets = TicketRepository.ListTickets();
-            return View(allTickets);
+            return View(SubmitterBusinessLayer.GetAllTickets(User.Identity.GetUserId()));
         }
     }
 }

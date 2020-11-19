@@ -12,7 +12,7 @@ namespace Shadow.Controllers
     [Authorize(Roles ="project manager")]
     public class ProjectManagerController : Controller
     {
-        AdminBusinessLayer AdminBusinessLayer = new AdminBusinessLayer();
+        ProjectManagerBusinessLayer ProjectManagerBusinessLayer = new ProjectManagerBusinessLayer();
         // GET: ProjectManager
         public ActionResult Index()
         {
@@ -26,7 +26,7 @@ namespace Shadow.Controllers
         [HttpPost]
         public ActionResult CreateAProject(string projectName)
         {
-            var result = AdminBusinessLayer.AddANewProject(User.Identity.GetUserId(), projectName);
+            var result = ProjectManagerBusinessLayer.AddANewProject(User.Identity.GetUserId(), projectName);
             if (result)
                 return View();
             else
@@ -35,13 +35,13 @@ namespace Shadow.Controllers
 
         public ActionResult EditProject(int projectId)
         {
-            var project = AdminBusinessLayer.GetProject(projectId);
+            var project = ProjectManagerBusinessLayer.GetProject(projectId);
             return View(project);
         }
         [HttpPost]
         public ActionResult EditProject(int projectId, Project project)
         {
-            var result = AdminBusinessLayer.EditProject(User.Identity.GetUserId(), project);
+            var result = ProjectManagerBusinessLayer.EditProject(User.Identity.GetUserId(), project);
 
             if (result)
                 return View(project);
@@ -51,30 +51,30 @@ namespace Shadow.Controllers
 
         public ActionResult AllProjectsByUser()
         {
-            var projects = AdminBusinessLayer.GetAllofMyProjects(User.Identity.GetUserId());
+            var projects = ProjectManagerBusinessLayer.GetAllofMyProjects(User.Identity.GetUserId());
             return View(projects);
         }
 
         public ActionResult AllProjects()
         {
-            var projects = AdminBusinessLayer.AllProject(User.Identity.GetUserId());
+            var projects = ProjectManagerBusinessLayer.AllProject(User.Identity.GetUserId());
             return View(projects);
         }
 
         public ActionResult AssignToProject()
         {
-            ViewBag.UserList = AdminBusinessLayer.GetAllUsers();
-            ViewBag.ProjectList = AdminBusinessLayer.AllProject(User.Identity.GetUserId());
+            ViewBag.UserList = ProjectManagerBusinessLayer.GetAllUsers();
+            ViewBag.ProjectList = ProjectManagerBusinessLayer.AllProject(User.Identity.GetUserId());
             return View();
         }
 
         [HttpPost]
         public ActionResult AssignToProject(string userId, int projectId)
         {
-            var result = AdminBusinessLayer.AssignUserToAProject(User.Identity.GetUserId(), userId, projectId);
+            var result = ProjectManagerBusinessLayer.AssignUserToAProject(User.Identity.GetUserId(), userId, projectId);
 
-            ViewBag.UserList = AdminBusinessLayer.GetAllUsers();
-            ViewBag.ProjectList = AdminBusinessLayer.AllProject(User.Identity.GetUserId());
+            ViewBag.UserList = ProjectManagerBusinessLayer.GetAllUsers();
+            ViewBag.ProjectList = ProjectManagerBusinessLayer.AllProject(User.Identity.GetUserId());
 
             if (result)
                 return View();
@@ -84,23 +84,93 @@ namespace Shadow.Controllers
 
         public ActionResult UnAssignFromProject()
         {
-            ViewBag.UserList = AdminBusinessLayer.GetAllUsers();
-            ViewBag.ProjectList = AdminBusinessLayer.AllProject(User.Identity.GetUserId());
+            ViewBag.UserList = ProjectManagerBusinessLayer.GetAllUsers();
+            ViewBag.ProjectList = ProjectManagerBusinessLayer.AllProject(User.Identity.GetUserId());
             return View();
         }
 
         [HttpPost]
         public ActionResult UnAssignFromProject(string userId, int projectId)
         {
-            var result = AdminBusinessLayer.UnAssignUserFromProject(User.Identity.GetUserId(), userId, projectId);
+            var result = ProjectManagerBusinessLayer.UnAssignUserFromProject(User.Identity.GetUserId(), userId, projectId);
 
-            ViewBag.UserList = AdminBusinessLayer.GetAllUsers();
-            ViewBag.ProjectList = AdminBusinessLayer.AllProject(User.Identity.GetUserId());
+            ViewBag.UserList = ProjectManagerBusinessLayer.GetAllUsers();
+            ViewBag.ProjectList = ProjectManagerBusinessLayer.AllProject(User.Identity.GetUserId());
 
             if (result)
                 return View();
             else
                 return RedirectToAction("Index");
+        }
+
+        public ActionResult GetAllTickets()
+        {
+            return View(ProjectManagerBusinessLayer.GetAllTickets(User.Identity.GetUserId()));
+        }
+
+        public ActionResult EditTicket(int ticketId)
+        {
+            var ticket = ProjectManagerBusinessLayer.GetTicket(ticketId);
+
+            ViewBag.TicketStatusList = ProjectManagerBusinessLayer.TicketStatuses();
+            ViewBag.TicketPrioritiesList = ProjectManagerBusinessLayer.TicketPriorities();
+            ViewBag.TicketTypeList = ProjectManagerBusinessLayer.TicketTypes();
+            return View(ticket);
+        }
+        [HttpPost]
+        public ActionResult EditTicket(int ticketId, string title, string description, int ticketStatusId, int ticketPrioritieId, int ticketTypeId)
+        {
+            var sendTicket = ProjectManagerBusinessLayer.GetTicket(ticketId);
+            Ticket ticket = new Ticket()
+            {
+                Id = ticketId,
+                Title = title,
+                Description = description,
+                TicketStatusId = ticketStatusId,
+                TicketPrioritieId = ticketPrioritieId,
+                TicketTypeId = ticketTypeId,
+                Updated = DateTime.Now,
+                Created = sendTicket.Created,
+                ProjectId = sendTicket.ProjectId,
+            };
+
+            var result = ProjectManagerBusinessLayer.EditTicket(User.Identity.GetUserId(), ticket);
+
+            ViewBag.TicketStatusList = ProjectManagerBusinessLayer.TicketStatuses();
+            ViewBag.TicketPrioritiesList = ProjectManagerBusinessLayer.TicketPriorities();
+            ViewBag.TicketTypeList = ProjectManagerBusinessLayer.TicketTypes();
+
+            if (result)
+                return RedirectToAction("GetAllTickets");
+            else
+                return RedirectToAction("Index");
+        }
+
+        public ActionResult AssignTicketToDeveloper(int ticketId)
+        {
+            ViewBag.DevelopersList = ProjectManagerBusinessLayer.GetAllUsers().Where(w => w.Roles.Any(a => a.RoleId == ProjectManagerBusinessLayer.GetRoleId("developer"))).ToList();
+            ViewBag.ticketId = ticketId;
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult AssignTicketToDeveloper(int ticketId, string userId)
+        {
+            var result = ProjectManagerBusinessLayer.AssignToDeveloper(User.Identity.GetUserId(), ticketId, userId);
+
+            ViewBag.DevelopersList = ProjectManagerBusinessLayer.GetAllUsers().Where(w => w.Roles.Any(a => a.RoleId == ProjectManagerBusinessLayer.GetRoleId("developer"))).ToList();
+            ViewBag.ticketId = ticketId;
+            if (result)
+                return RedirectToAction("GetAllTickets");
+            else
+                return RedirectToAction("Index");
+        }
+
+        public ActionResult UnAssignTicket(int ticketId)
+        {
+            ProjectManagerBusinessLayer.UnAssignTicket(User.Identity.GetUserId(), ticketId);
+
+            return RedirectToAction("GetAllTickets");
         }
     }
 }

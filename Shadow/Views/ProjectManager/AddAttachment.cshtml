@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewBag.Title = "AddAttachment";
+}
+
+<h2>Add an Attachment</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.Hidden("ticketId", (int)ViewBag.ticketId)
+    <h4>File URL: </h4> @Html.TextBox("fileUrl")
+    <h4>File Path: </h4> @Html.TextBox("filePath")
+    <h4>Description: </h4> @Html.TextArea("description")
+
+    <input type="submit" value="Add Attchment" name="Add Attachment" />
+}

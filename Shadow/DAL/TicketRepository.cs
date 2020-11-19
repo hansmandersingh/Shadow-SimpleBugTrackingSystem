@@ -164,5 +164,36 @@ namespace Shadow.DAL
         {
             return db.TicketComments.Include(i => i.Ticket).Include(i => i.User).Where(t => t.TicketId == ticketId).ToList();
         }
+
+        public bool AddAttachment(string userId, int ticketId, string fileUrl, string filePath, string description)
+        {
+            var ticket = db.Tickets.FirstOrDefault(t => t.Id == ticketId);
+            TicketAttachement attachement = new TicketAttachement()
+            {
+                UserId = userId,
+                TicketId = ticketId,
+                FileUrl = fileUrl,
+                FilePath = filePath,
+                Description = description,
+            };
+
+            if (ticket != null)
+            {
+                ticket.TicketAttachements.Add(attachement);
+                db.TicketAttachements.Add(attachement);
+                db.Entry(ticket).State = EntityState.Modified;
+                db.SaveChanges();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public List<TicketAttachement> ShowAllAttachments(int ticketId)
+        {
+            return db.TicketAttachements.Where(t => t.TicketId == ticketId).ToList();
+        }
     }
 }

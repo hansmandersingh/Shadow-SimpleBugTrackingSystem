@@ -123,5 +123,20 @@ namespace Shadow.BL
                 return false;
             }
         }
+
+        public List<TicketType> TicketTypes()
+        {
+            return TicketRepository.AllTicketTypes();
+        }
+
+        public List<TicketStatus> TicketStatuses()
+        {
+            return TicketRepository.TicketStatuses();
+        }
+
+        public List<TicketPrioritie> TicketPriorities()
+        {
+            return TicketRepository.TicketPriorities();
+        }
     }
 }

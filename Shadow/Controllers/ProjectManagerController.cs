@@ -107,5 +107,37 @@ namespace Shadow.Controllers
         {
             return View(ProjectManagerBusinessLayer.GetAllTickets(User.Identity.GetUserId()));
         }
+
+        public ActionResult EditTicket()
+        {
+            ViewBag.TicketStatusList = ProjectManagerBusinessLayer.TicketStatuses();
+            ViewBag.TicketPrioritiesList = ProjectManagerBusinessLayer.TicketPriorities();
+            ViewBag.TicketTypeList = ProjectManagerBusinessLayer.TicketTypes();
+            return View();
+        }
+        [HttpPost]
+        public ActionResult EditTicket(string title, string description, int ticketStatusId, int ticketPrioritieId, int ticketTypeId)
+        {
+            Ticket ticket = new Ticket()
+            {
+                Title = title,
+                Description = description,
+                TicketStatusId = ticketStatusId,
+                TicketPrioritieId = ticketPrioritieId,
+                TicketTypeId = ticketTypeId,
+                Updated = DateTime.Now,
+            };
+
+            var result = ProjectManagerBusinessLayer.EditTicket(User.Identity.GetUserId(), ticket);
+
+            ViewBag.TicketStatusList = ProjectManagerBusinessLayer.TicketStatuses();
+            ViewBag.TicketPrioritiesList = ProjectManagerBusinessLayer.TicketPriorities();
+            ViewBag.TicketTypeList = ProjectManagerBusinessLayer.TicketTypes();
+
+            if (result)
+                return View();
+            else
+                return RedirectToAction("Index");
+        }
     }
 }

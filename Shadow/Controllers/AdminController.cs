@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Shadow.BL;
 using Shadow.Models;
+using PagedList;
 
 namespace Shadow.Controllers
 {
@@ -137,9 +138,43 @@ namespace Shadow.Controllers
                 return RedirectToAction("Index");
         }
 
-        public ActionResult GetAllTickets()
+        public ActionResult GetAllTickets(string sortOrder,string currentFilter, string searchString, int? page) 
         {
-            return View(AdminBusinessLayer.GetAllTickets());
+            ViewBag.CurrentSort = sortOrder;
+            List<Ticket> AllTickets;
+            
+            if(searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+            ViewBag.CurrentFilter = searchString;
+
+            switch (sortOrder)
+            {
+                case "OrderByAscending":
+                    AllTickets = AdminBusinessLayer.GetAllTickets().OrderBy(a => a.Title).ToList();
+                    break;
+                case "OrderByDescending":
+                    AllTickets = AdminBusinessLayer.GetAllTickets().OrderByDescending(a => a.Title).ToList();
+                    break;
+                default:
+                    AllTickets = AdminBusinessLayer.GetAllTickets().ToList();
+                    break;
+            }
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                AllTickets = AllTickets.Where(s => s.Title.Contains(searchString) || s.Description.Contains(searchString)).ToList();
+            }
+            int pageSize = 5;
+
+            int pageNumber = (page ?? 1);
+
+            return View(AllTickets.ToPagedList(pageNumber, pageSize));
         }
     }
 }

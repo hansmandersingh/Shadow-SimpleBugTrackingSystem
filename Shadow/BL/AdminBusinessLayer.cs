@@ -178,5 +178,10 @@ namespace Shadow.BL
                 return false;
             }
         }
+
+        public List<TicketAttachement> ShowAllAttachments(int ticketId)
+        {
+            return TicketRepository.ShowAllAttachments(ticketId);
+        }
     }
 }

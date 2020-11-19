@@ -170,7 +170,7 @@ namespace Shadow.Controllers
             {
                 AllTickets = AllTickets.Where(s => s.Title.Contains(searchString) || s.Description.Contains(searchString)).ToList();
             }
-            int pageSize = 1;
+            int pageSize = 5;
 
             int pageNumber = (page ?? 1);
 

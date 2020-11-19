@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using PagedList;
 
 namespace Shadow.Controllers
 {
@@ -103,10 +104,18 @@ namespace Shadow.Controllers
                 return RedirectToAction("Index");
         }
 
-        public ActionResult GetAllTickets(string sortOrder, string searchString)
+        public ActionResult GetAllTickets(string sortOrder,string currentFilter, string searchString, int? page)
         {
             List<Ticket> AllTickets;
+            ViewBag.CurrentSort = sortOrder;
 
+            if (sortOrder != null)
+            {
+                page = 1;
+            } else
+            {
+                searchString = currentFilter;
+            }
             switch (sortOrder)
             {
                 case "OrderByAscending":
@@ -124,7 +133,11 @@ namespace Shadow.Controllers
             {
                 AllTickets = AllTickets.Where(s => s.Title.Contains(searchString) || s.Description.Contains(searchString)).ToList();
             }
-            return View(AllTickets);
+
+            int pageSize = 5;
+            int pageNumber = (page ?? 1);
+
+            return View(AllTickets.ToPagedList(pageNumber, pageSize));
         }
 
         public ActionResult EditTicket(int ticketId)

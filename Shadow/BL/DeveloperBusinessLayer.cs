@@ -30,7 +30,28 @@ namespace Shadow.BL
         {
             return TicketRepository.AllTicketTypes();
         }
+        public List<Ticket> GetAllTickets(string userId)
+        {
+            List<Ticket> tickets = new List<Ticket>();
 
+            if (UserAndRolesRepository.CheckIfUserIsInRole(userId, "developer"))
+            {
+                tickets = TicketRepository.GetAllTicketsFromProject(userId);
+            }
+
+            return tickets;
+        }
+        public List<Ticket> ticketsAssignToDeveloper(string userId)
+        {
+            List<Ticket> tickets = new List<Ticket>();
+
+            if (UserAndRolesRepository.CheckIfUserIsInRole(userId, "developer"))
+            {
+                tickets = TicketRepository.GetAllTickets();
+            }
+
+            return tickets;
+        }
         public List<TicketPrioritie> AllTicketPriorities()
         {
             return TicketRepository.TicketPriorities();

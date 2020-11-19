@@ -108,15 +108,17 @@ namespace Shadow.Controllers
             return View(ProjectManagerBusinessLayer.GetAllTickets(User.Identity.GetUserId()));
         }
 
-        public ActionResult EditTicket()
+        public ActionResult EditTicket(int ticketId)
         {
+            var ticket = ProjectManagerBusinessLayer.GetTicket(ticketId);
+
             ViewBag.TicketStatusList = ProjectManagerBusinessLayer.TicketStatuses();
             ViewBag.TicketPrioritiesList = ProjectManagerBusinessLayer.TicketPriorities();
             ViewBag.TicketTypeList = ProjectManagerBusinessLayer.TicketTypes();
-            return View();
+            return View(ticket);
         }
         [HttpPost]
-        public ActionResult EditTicket(string title, string description, int ticketStatusId, int ticketPrioritieId, int ticketTypeId)
+        public ActionResult EditTicket(int ticketId, string title, string description, int ticketStatusId, int ticketPrioritieId, int ticketTypeId)
         {
             Ticket ticket = new Ticket()
             {

@@ -138,5 +138,10 @@ namespace Shadow.BL
         {
             return TicketRepository.TicketPriorities();
         }
+
+        public Ticket GetTicket(int ticketId)
+        {
+            return TicketRepository.GetTicket(ticketId);
+        }
     }
 }

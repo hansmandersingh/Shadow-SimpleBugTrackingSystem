@@ -158,5 +158,27 @@ namespace Shadow.BL
             else
                 return false;
         }
+
+        public string GetRoleId(string roleName)
+        {
+            return UserAndRolesRepository.GetRoleId(roleName);
+        }
+
+        public bool UnAssignTicket(string managerId, int ticketId)
+        {
+            if (UserAndRolesRepository.CheckIfUserIsInRole(managerId, "project manager"))
+            {
+                var result = TicketRepository.UnAssignTicket(ticketId);
+
+                if (result)
+                    return true;
+                else
+                    return false;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }

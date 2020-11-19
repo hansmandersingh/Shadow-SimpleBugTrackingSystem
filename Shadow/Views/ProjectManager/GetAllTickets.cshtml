@@ -4,7 +4,7 @@
     ViewBag.Title = "GetAllTickets";
 }
 
-<h2>GetAllTickets</h2>
+<h2>Get All Tickets</h2>
 
 <table class="table">
     <tr>
@@ -38,7 +38,15 @@
             @Html.DisplayFor(modelItem => item.Updated)
         </td>
         <td>
-            @Html.ActionLink("Edit Ticket", "EditTicket", new { ticketId =item.Id },null)
+            @Html.ActionLink("Edit Ticket", "EditTicket", new { ticketId = item.Id }, null) |
+            @if (item.AssignedToUserId != null)
+            {
+                @Html.ActionLink("UnAssign Task", "UnAssignTicket", new { ticketId = item.Id },null)
+            }
+            else
+            {
+                @Html.ActionLink("Assign to Developer", "AssignTicketToDeveloper", new { ticketId = item.Id }, null)
+            }
         </td>
     </tr>
 }

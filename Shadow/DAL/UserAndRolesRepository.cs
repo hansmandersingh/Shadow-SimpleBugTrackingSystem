@@ -184,5 +184,17 @@ namespace Shadow.DAL
                 return false;
             }
         }
+
+        public string GetRoleId(string roleName)
+        {
+            roleName = roleName.ToLower();
+            string roleId = "";
+            if (roleManager.RoleExists(roleName))
+            {
+                roleId = roleManager.FindByName(roleName).Id;
+            }
+
+            return roleId;
+        }
     }
 }

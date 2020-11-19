@@ -145,5 +145,32 @@ namespace Shadow.Controllers
             else
                 return RedirectToAction("Index");
         }
+
+        public ActionResult AssignTicketToDeveloper(int ticketId)
+        {
+            ViewBag.DevelopersList = ProjectManagerBusinessLayer.GetAllUsers().Where(w => w.Roles.Any(a => a.RoleId == ProjectManagerBusinessLayer.GetRoleId("developer"))).ToList();
+            ViewBag.ticketId = ticketId;
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult AssignTicketToDeveloper(int ticketId, string userId)
+        {
+            var result = ProjectManagerBusinessLayer.AssignToDeveloper(User.Identity.GetUserId(), ticketId, userId);
+
+            ViewBag.DevelopersList = ProjectManagerBusinessLayer.GetAllUsers().Where(w => w.Roles.Any(a => a.RoleId == ProjectManagerBusinessLayer.GetRoleId("developer"))).ToList();
+            ViewBag.ticketId = ticketId;
+            if (result)
+                return RedirectToAction("GetAllTickets");
+            else
+                return RedirectToAction("Index");
+        }
+
+        public ActionResult UnAssignTicket(int ticketId)
+        {
+            ProjectManagerBusinessLayer.UnAssignTicket(User.Identity.GetUserId(), ticketId);
+
+            return RedirectToAction("GetAllTickets");
+        }
     }
 }

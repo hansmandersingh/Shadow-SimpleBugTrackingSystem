@@ -302,6 +302,7 @@
     <Content Include="Views\Admin\GetAllTickets.cshtml" />
     <Content Include="Views\ProjectManager\GetAllTickets.cshtml" />
     <Content Include="Views\ProjectManager\EditTicket.cshtml" />
+    <Content Include="Views\ProjectManager\AssignTicketToDeveloper.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

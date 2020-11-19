@@ -103,7 +103,7 @@ namespace Shadow.Controllers
                 return RedirectToAction("Index");
         }
 
-        public ActionResult GetAllTickets(string sortOrder)
+        public ActionResult GetAllTickets(string sortOrder, string searchString)
         {
             List<Ticket> AllTickets;
 
@@ -118,6 +118,11 @@ namespace Shadow.Controllers
                 default:
                     AllTickets = ProjectManagerBusinessLayer.GetAllTickets(User.Identity.GetUserId());
                     break;
+            }
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                AllTickets = AllTickets.Where(s => s.Title.Contains(searchString) || s.Description.Contains(searchString)).ToList();
             }
             return View(AllTickets);
         }

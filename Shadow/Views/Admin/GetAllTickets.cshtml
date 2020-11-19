@@ -1,4 +1,6 @@
-﻿@model IEnumerable<Shadow.Models.Ticket>
+﻿@model PagedList.IPagedList<Shadow.Models.Ticket>
+@using PagedList.Mvc
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
     ViewBag.Title = "GetAllTickets";
@@ -6,12 +8,12 @@
 
 <h2>Get All Tickets</h2>
 
-Order By: <p style="display:inline">@Html.ActionLink("Order by Ascending", "GetAllTickets", new { sortOrder = "OrderByAscending" })</p> | <p style="display:inline">@Html.ActionLink("Order by Descending", "GetAllTickets", new { sortOrder = "OrderByDescending" })</p>
+Order By: <p style="display:inline">@Html.ActionLink("Order by Ascending", "GetAllTickets", new { sortOrder = "OrderByAscending", currentFilter=ViewBag.CurrentFilter })</p> | <p style="display:inline">@Html.ActionLink("Order by Descending", "GetAllTickets", new { sortOrder = "OrderByDescending", currentFilter=ViewBag.CurrentFilter })</p>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("GetAllTickets", "Admin", FormMethod.Get))
 {
     <p>
-        Find by name: @Html.TextBox("searchString")
+        Find by name: @Html.TextBox("searchString", ViewBag.CurrentFilter as string)
         <input type="submit" value="Search" />
     </p>
 }
@@ -19,25 +21,25 @@ Order By: <p style="display:inline">@Html.ActionLink("Order by Ascending", "GetA
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Project.Name)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Project.Name)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.TicketPrioritie.Name)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().TicketPrioritie.Name)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.TicketStatus.Name)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().TicketStatus.Name)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Title)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Title)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Description)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Description)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Created)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Created)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Updated)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Updated)
         </th>
         <th></th>
     </tr>
@@ -75,3 +77,8 @@ Order By: <p style="display:inline">@Html.ActionLink("Order by Ascending", "GetA
     }
 
 </table>
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("GetAllTickets",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

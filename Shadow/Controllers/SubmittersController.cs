@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
+using PagedList;
 using Shadow.BL;
 using Shadow.DAL;
 using Shadow.Models;
@@ -45,9 +46,43 @@ namespace Shadow.Controllers
             return View(allProjects);
         }
 
-        public ActionResult AllTickets()
+        public ActionResult GetAllTickets(string sortingOrder, string currentFilter, string searchString, int? page)
         {
-            return View(SubmitterBusinessLayer.GetAllTickets(User.Identity.GetUserId()));
+            List<Ticket> Tickets;
+            ViewBag.currentSort = sortingOrder;
+
+            if(sortingOrder != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+            switch (sortingOrder)
+            {
+                case "OrderByAscending":
+                    Tickets = SubmitterBusinessLayer.GetAllTickets(User.Identity.GetUserId())
+                        .OrderBy(t => t.Title).ToList();
+                    break;
+                case "OrderByDescending":
+                    Tickets = SubmitterBusinessLayer.GetAllTickets(User.Identity.GetUserId())
+                        .OrderByDescending(t => t.Title).ToList();
+                    break;
+                default:
+                    Tickets = SubmitterBusinessLayer.GetAllTickets(User.Identity.GetUserId());
+                    break;
+
+            }
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                Tickets = Tickets.Where(s => s.Title.Contains(searchString) || s.Description.Contains(searchString)).ToList();
+            }
+
+            int pageSize = 5;
+            int pageNumber = (page ?? 1);
+
+            return View(Tickets.ToPagedList(pageNumber, pageSize));
         }
     }
 }

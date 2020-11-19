@@ -7,7 +7,7 @@
 
 @using (Html.BeginForm())
 {
-    @Html.Hidden("ticketId", new { ticketId = Model.Id })
+    @Html.Hidden("ticketId", Model.Id)
     <h4>Enter a new Title: </h4> @Html.TextBox("title")
     <h4>Enter a new Description: </h4> @Html.TextArea("description")
     <h4>Select ticket Status:</h4> @Html.DropDownList("ticketStatusId", new SelectList(ViewBag.TicketStatusList, "Id", "Name", "Id"))

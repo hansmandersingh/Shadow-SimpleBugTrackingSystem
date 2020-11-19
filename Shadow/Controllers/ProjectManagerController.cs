@@ -120,14 +120,18 @@ namespace Shadow.Controllers
         [HttpPost]
         public ActionResult EditTicket(int ticketId, string title, string description, int ticketStatusId, int ticketPrioritieId, int ticketTypeId)
         {
+            var sendTicket = ProjectManagerBusinessLayer.GetTicket(ticketId);
             Ticket ticket = new Ticket()
             {
+                Id = ticketId,
                 Title = title,
                 Description = description,
                 TicketStatusId = ticketStatusId,
                 TicketPrioritieId = ticketPrioritieId,
                 TicketTypeId = ticketTypeId,
                 Updated = DateTime.Now,
+                Created = sendTicket.Created,
+                ProjectId = sendTicket.ProjectId,
             };
 
             var result = ProjectManagerBusinessLayer.EditTicket(User.Identity.GetUserId(), ticket);
@@ -137,7 +141,7 @@ namespace Shadow.Controllers
             ViewBag.TicketTypeList = ProjectManagerBusinessLayer.TicketTypes();
 
             if (result)
-                return View();
+                return View(sendTicket);
             else
                 return RedirectToAction("Index");
         }

@@ -107,5 +107,70 @@ namespace Shadow.Controllers
         {
             return View(ProjectManagerBusinessLayer.GetAllTickets(User.Identity.GetUserId()));
         }
+
+        public ActionResult EditTicket(int ticketId)
+        {
+            var ticket = ProjectManagerBusinessLayer.GetTicket(ticketId);
+
+            ViewBag.TicketStatusList = ProjectManagerBusinessLayer.TicketStatuses();
+            ViewBag.TicketPrioritiesList = ProjectManagerBusinessLayer.TicketPriorities();
+            ViewBag.TicketTypeList = ProjectManagerBusinessLayer.TicketTypes();
+            return View(ticket);
+        }
+        [HttpPost]
+        public ActionResult EditTicket(int ticketId, string title, string description, int ticketStatusId, int ticketPrioritieId, int ticketTypeId)
+        {
+            var sendTicket = ProjectManagerBusinessLayer.GetTicket(ticketId);
+            Ticket ticket = new Ticket()
+            {
+                Id = ticketId,
+                Title = title,
+                Description = description,
+                TicketStatusId = ticketStatusId,
+                TicketPrioritieId = ticketPrioritieId,
+                TicketTypeId = ticketTypeId,
+                Updated = DateTime.Now,
+                Created = sendTicket.Created,
+                ProjectId = sendTicket.ProjectId,
+            };
+
+            var result = ProjectManagerBusinessLayer.EditTicket(User.Identity.GetUserId(), ticket);
+
+            ViewBag.TicketStatusList = ProjectManagerBusinessLayer.TicketStatuses();
+            ViewBag.TicketPrioritiesList = ProjectManagerBusinessLayer.TicketPriorities();
+            ViewBag.TicketTypeList = ProjectManagerBusinessLayer.TicketTypes();
+
+            if (result)
+                return RedirectToAction("GetAllTickets");
+            else
+                return RedirectToAction("Index");
+        }
+
+        public ActionResult AssignTicketToDeveloper(int ticketId)
+        {
+            ViewBag.DevelopersList = ProjectManagerBusinessLayer.GetAllUsers().Where(w => w.Roles.Any(a => a.RoleId == ProjectManagerBusinessLayer.GetRoleId("developer"))).ToList();
+            ViewBag.ticketId = ticketId;
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult AssignTicketToDeveloper(int ticketId, string userId)
+        {
+            var result = ProjectManagerBusinessLayer.AssignToDeveloper(User.Identity.GetUserId(), ticketId, userId);
+
+            ViewBag.DevelopersList = ProjectManagerBusinessLayer.GetAllUsers().Where(w => w.Roles.Any(a => a.RoleId == ProjectManagerBusinessLayer.GetRoleId("developer"))).ToList();
+            ViewBag.ticketId = ticketId;
+            if (result)
+                return RedirectToAction("GetAllTickets");
+            else
+                return RedirectToAction("Index");
+        }
+
+        public ActionResult UnAssignTicket(int ticketId)
+        {
+            ProjectManagerBusinessLayer.UnAssignTicket(User.Identity.GetUserId(), ticketId);
+
+            return RedirectToAction("GetAllTickets");
+        }
     }
 }

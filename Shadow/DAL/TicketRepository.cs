@@ -110,5 +110,35 @@ namespace Shadow.DAL
         {
             return db.TicketStatuses.ToList();
         }
+
+        public bool AssignToDeveloper(int ticketId, string assignedToId)
+        {
+            var ticket = db.Tickets.FirstOrDefault(t => t.Id == ticketId);
+
+            if (ticket != null)
+            {
+                ticket.AssignedToUserId = assignedToId;
+                db.SaveChanges();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool UnAssignTicket(int ticketId)
+        {
+            var ticket = db.Tickets.FirstOrDefault(t => t.Id == ticketId);
+
+            if (ticket != null)
+            {
+                ticket.AssignedToUserId = null;
+                db.SaveChanges();
+                return true;
+            }
+            else
+                return false;
+        }
     }
 }

@@ -312,6 +312,7 @@
     <Content Include="Views\ProjectManager\AssignTicketToDeveloper.cshtml" />
     <Content Include="Views\Developers\GetAllTickets.cshtml" />
     <Content Include="Views\Developers\GetAllTicketAssignToDeveloper.cshtml" />
+    <Content Include="Views\Submitters\GetAllTickets.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

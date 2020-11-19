@@ -316,9 +316,10 @@
     <Content Include="Views\Admin\AllComments.cshtml" />
     <Content Include="Views\ProjectManager\AddComment.cshtml" />
     <Content Include="Views\ProjectManager\ShowAllComments.cshtml" />
-    <Content Include="Views\Submitters\GetAllTickets.cshtml" />
-    <Content Include="Views\Submitters\AddComment.cshtml" />
-    <Content Include="Views\Submitters\ShowAllComments.cshtml" />
+    <Content Include="Views\Admin\AddAttachment.cshtml" />
+    <Content Include="Views\Admin\ViewAllAttachments.cshtml" />
+    <Content Include="Views\ProjectManager\AddAttachment.cshtml" />
+    <Content Include="Views\ProjectManager\ViewAllAttachments.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

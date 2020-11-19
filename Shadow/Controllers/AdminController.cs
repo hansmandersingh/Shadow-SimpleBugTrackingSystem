@@ -197,5 +197,26 @@ namespace Shadow.Controllers
         {
             return View(AdminBusinessLayer.AllComments(ticketId));
         }
+
+        public ActionResult AddAttachment(int ticketId)
+        {
+            ViewBag.ticketId = ticketId;
+            return View();
+        }
+        [HttpPost]
+        public ActionResult AddAttachment(int ticketId, string fileUrl, string filePath, string description)
+        {
+            var result = AdminBusinessLayer.AddAttachment(User.Identity.GetUserId(), ticketId, fileUrl, filePath, description);
+
+            if (result)
+                return RedirectToAction("GetAllTickets");
+            else
+                return View(ticketId);
+        }
+
+        public ActionResult ViewAllAttachments(int ticketId)
+        {
+            return View(AdminBusinessLayer.ShowAllAttachments(ticketId));
+        }
     }
 }

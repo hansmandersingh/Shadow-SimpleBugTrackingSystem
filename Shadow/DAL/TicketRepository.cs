@@ -100,5 +100,10 @@ namespace Shadow.DAL
         {
             return db.TicketStatuses.ToList();
         }
+
+        public List<Ticket> ListTickets(int projectId)
+        {
+            return db.Tickets.Where(t => t.ProjectId == projectId).ToList();
+        }
     }
 }

@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Shadow.BL;
+using Shadow.DAL;
 using Shadow.Models;
 
 namespace Shadow.Controllers
@@ -16,6 +17,7 @@ namespace Shadow.Controllers
     public class SubmittersController : Controller
     {
         SubmitterBusinessLayer SubmitterBusinessLayer = new SubmitterBusinessLayer();
+        TicketRepository TicketRepository = new TicketRepository();
 
         public ActionResult CreateTicket()
         {
@@ -40,6 +42,12 @@ namespace Shadow.Controllers
         {
             var allProjects = SubmitterBusinessLayer.AllProject(User.Identity.GetUserId());
             return View(allProjects);
+        }
+
+        public ActionResult AllTickets()
+        {
+            var allTickets = TicketRepository.ListTickets();
+            return View(allTickets);
         }
     }
 }

@@ -299,6 +299,7 @@
     <Content Include="Views\Submitters\CreateTicket.cshtml" />
     <Content Include="Views\Developers\AllProject.cshtml" />
     <Content Include="Views\Submitters\AllProjects.cshtml" />
+    <Content Include="Views\Submitters\AllTickets.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

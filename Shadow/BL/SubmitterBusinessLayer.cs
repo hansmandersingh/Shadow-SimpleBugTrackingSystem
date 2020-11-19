@@ -73,5 +73,26 @@ namespace Shadow.BL
 
             return tickets;
         }
+        public bool AddComments(string userId, int ticketId, string commentText)
+        {
+            if (UserAndRolesRepository.CheckIfUserIsInRole(userId, "submitter"))
+            {
+                var result = TicketRepository.AddComment(userId, ticketId, commentText);
+
+                if (result)
+                    return true;
+                else
+                    return false;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public List<TicketComment> AllComments(int ticketId)
+        {
+            return TicketRepository.ShowAllComments(ticketId);
+        }
     }
 }

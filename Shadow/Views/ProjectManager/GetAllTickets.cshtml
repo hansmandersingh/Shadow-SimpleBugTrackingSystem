@@ -1,4 +1,6 @@
-﻿@model IEnumerable<Shadow.Models.Ticket>
+﻿@model PagedList.IPagedList<Shadow.Models.Ticket>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
     ViewBag.Title = "GetAllTickets";
@@ -6,49 +8,65 @@
 
 <h2>All Tickets</h2>
 
+Order By: <p style="display:inline">@Html.ActionLink("Order by Ascending", "GetAllTickets", new { sortOrder = "OrderByAscending", currentFilter = ViewBag.CurrentFilter })</p> | <p style="display:inline">@Html.ActionLink("Order by Descending", "GetAllTickets", new { sortOrder = "OrderByDescending", currentFilter = ViewBag.CurrentFilter })</p>
+
+@using (Html.BeginForm("GetAllTickets", "ProjectManager", FormMethod.Get))
+{
+    <p>
+        Find by name: @Html.TextBox("searchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Search" />
+    </p>
+}
+
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Title)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Title)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Description)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Description)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Created)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Created)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Updated)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Updated)
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Created)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Updated)
-        </td>
-        <td>
-            @Html.ActionLink("Edit Ticket", "EditTicket", new { ticketId = item.Id }, null) |
-            @if (item.AssignedToUserId != null)
-            {
-                @Html.ActionLink("UnAssign Task", "UnAssignTicket", new { ticketId = item.Id },null)
-            }
-            else
-            {
-                @Html.ActionLink("Assign to Developer", "AssignTicketToDeveloper", new { ticketId = item.Id }, null)
-            }
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Created)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Updated)
+            </td>
+            <td>
+                @Html.ActionLink("Edit Ticket", "EditTicket", new { ticketId = item.Id }, null) |
+                @if (item.AssignedToUserId != null)
+                {
+                    @Html.ActionLink("UnAssign Task", "UnAssignTicket", new { ticketId = item.Id }, null)
+                }
+                else
+                {
+                    @Html.ActionLink("Assign to Developer", "AssignTicketToDeveloper", new { ticketId = item.Id }, null)
+                }
+            </td>
+        </tr>
+    }
 
 </table>
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("GetAllTickets",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

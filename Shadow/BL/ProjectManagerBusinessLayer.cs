@@ -110,5 +110,18 @@ namespace Shadow.BL
 
             return tickets;
         }
+
+        public bool EditTicket(string userId, Ticket ticket)
+        {
+            if (UserAndRolesRepository.CheckIfUserIsInRole(userId, "project manager"))
+            {
+                TicketRepository.EditTicket(ticket);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }

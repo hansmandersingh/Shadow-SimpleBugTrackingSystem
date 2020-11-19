@@ -137,9 +137,24 @@ namespace Shadow.Controllers
                 return RedirectToAction("Index");
         }
 
-        public ActionResult GetAllTickets()
-        {
-            return View(AdminBusinessLayer.GetAllTickets());
+        public ActionResult GetAllTickets(string sortOrder) 
+        { 
+
+            List<Ticket> AllTickets;
+
+            switch (sortOrder)
+            {
+                case "OrderByAscending":
+                    AllTickets = AdminBusinessLayer.GetAllTickets().OrderBy(a => a.Title).ToList();
+                    break;
+                case "OrderByDescending":
+                    AllTickets = AdminBusinessLayer.GetAllTickets().OrderByDescending(a => a.Title).ToList();
+                    break;
+                default:
+                    AllTickets = AdminBusinessLayer.GetAllTickets().ToList();
+                    break;
+            }
+            return View(AllTickets);
         }
     }
 }

@@ -141,5 +141,25 @@ namespace Shadow.BL
         {
             return TicketRepository.GetAllTickets();
         }
+
+        public bool AddCommentOnTicket(string userId,int ticketId , string commentText)
+        {
+            if (UserAndRolesRepository.CheckIfUserIsInRole(userId, "admin"))
+            {
+                var result = TicketRepository.AddComment(userId, ticketId, commentText);
+
+                if (result)
+                    return true;
+                else
+                    return false;
+            }
+            else
+                return false;
+        }
+
+        public List<TicketComment> AllComments(int ticketId)
+        {
+            return TicketRepository.ShowAllComments(ticketId);
+        }
     }
 }

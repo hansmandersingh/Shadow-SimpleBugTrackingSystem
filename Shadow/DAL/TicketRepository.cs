@@ -140,5 +140,29 @@ namespace Shadow.DAL
             else
                 return false;
         }
+
+        public bool AddComment(string userId, int ticketId, string commentText)
+        {
+            var ticket = db.Tickets.FirstOrDefault(t => t.Id == ticketId);
+            TicketComment comment = new TicketComment() { TicketId = ticketId, UserId = userId, Comment = commentText };
+
+            if (ticket != null)
+            {
+                ticket.TicketComments.Add(comment);
+                db.TicketComments.Add(comment);
+                db.Entry(ticket).State = EntityState.Modified;
+                db.SaveChanges();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public List<TicketComment> ShowAllComments(int ticketId)
+        {
+            return db.TicketComments.Include(i => i.Ticket).Include(i => i.User).Where(t => t.TicketId == ticketId).ToList();
+        }
     }
 }

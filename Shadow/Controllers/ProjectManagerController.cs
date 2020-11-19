@@ -204,5 +204,26 @@ namespace Shadow.Controllers
 
             return RedirectToAction("GetAllTickets");
         }
+
+        public ActionResult AddComment(int ticketId)
+        {
+            ViewBag.ticketId = ticketId;
+            return View();
+        }
+        [HttpPost]
+        public ActionResult AddComment(int ticketId, string commentText)
+        {
+            var result = ProjectManagerBusinessLayer.AddComments(User.Identity.GetUserId(), ticketId, commentText);
+
+            if (result)
+                return RedirectToAction("GetAllTickets");
+            else
+                return View(ticketId);
+        }
+
+        public ActionResult ShowAllComments(int ticketId)
+        {
+            return View(ProjectManagerBusinessLayer.AllComments(ticketId));
+        }
     }
 }

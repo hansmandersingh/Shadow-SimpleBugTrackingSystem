@@ -1,0 +1,14 @@
+﻿
+@{
+    ViewBag.Title = "AssignTicketToDeveloper";
+}
+
+<h2>Assign Ticket To Developer</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.Hidden("ticketId", (int)ViewBag.ticketId)
+    <h4>Please select a user to assign this ticket to: </h4> @Html.DropDownList("userId", new SelectList(ViewBag.DevelopersList, "Id", "UserName", "Id"))
+
+    <input type="submit" name="Add" value="Add"/>
+}

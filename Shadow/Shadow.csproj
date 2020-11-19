@@ -168,10 +168,12 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="BL\AdminBusinessLayer.cs" />
+    <Compile Include="BL\DeveloperBusinessLayer.cs" />
     <Compile Include="BL\ProjectManagerBusinessLayer.cs" />
     <Compile Include="BL\SubmitterBusinessLayer.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\DevelopersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ProjectManagerController.cs" />
@@ -294,12 +296,13 @@
     <Content Include="Views\ProjectManager\AllProjects.cshtml" />
     <Content Include="Views\ProjectManager\AssignToProject.cshtml" />
     <Content Include="Views\ProjectManager\UnAssignFromProject.cshtml" />
-    <Content Include="Views\Submitters\Create.cshtml" />
-    <Content Include="Views\Submitters\Delete.cshtml" />
-    <Content Include="Views\Submitters\Details.cshtml" />
-    <Content Include="Views\Submitters\Edit.cshtml" />
-    <Content Include="Views\Submitters\Index.cshtml" />
     <Content Include="Views\Submitters\CreateTicket.cshtml" />
+    <Content Include="Views\Developers\AllProject.cshtml" />
+    <Content Include="Views\Submitters\AllProjects.cshtml" />
+    <Content Include="Views\Admin\GetAllTickets.cshtml" />
+    <Content Include="Views\ProjectManager\GetAllTickets.cshtml" />
+    <Content Include="Views\ProjectManager\EditTicket.cshtml" />
+    <Content Include="Views\ProjectManager\AssignTicketToDeveloper.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

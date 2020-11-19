@@ -70,6 +70,16 @@ namespace Shadow.DAL
             return db.Tickets.FirstOrDefault(t => t.Id == ticketId);
         }
 
+        public List<Ticket> GetAllTickets()
+        {
+            return db.Tickets.Include(i => i.Project).Include(i => i.Owner).Include(i => i.TicketStatus).Include(i => i.TicketPrioritie).Include(i => i.AssignedToUser).ToList();
+        }
+
+        public List<Ticket> GetAllTicketsFromProject(string userId)
+        {
+            return db.ProjectUsers.Where(s => s.UserId == userId).Select(s => s.Project).SelectMany(s => s.Tickets).ToList(); 
+        }
+
         public bool DeleteTicket(int ticketId)
         {
             var ticket = db.Tickets.Find(ticketId);
@@ -99,6 +109,36 @@ namespace Shadow.DAL
         public List<TicketStatus> TicketStatuses()
         {
             return db.TicketStatuses.ToList();
+        }
+
+        public bool AssignToDeveloper(int ticketId, string assignedToId)
+        {
+            var ticket = db.Tickets.FirstOrDefault(t => t.Id == ticketId);
+
+            if (ticket != null)
+            {
+                ticket.AssignedToUserId = assignedToId;
+                db.SaveChanges();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool UnAssignTicket(int ticketId)
+        {
+            var ticket = db.Tickets.FirstOrDefault(t => t.Id == ticketId);
+
+            if (ticket != null)
+            {
+                ticket.AssignedToUserId = null;
+                db.SaveChanges();
+                return true;
+            }
+            else
+                return false;
         }
     }
 }

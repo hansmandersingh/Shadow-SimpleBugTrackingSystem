@@ -11,6 +11,7 @@ namespace Shadow.BL
     {
         UserAndRolesRepository UserAndRolesRepository = new UserAndRolesRepository();
         ProjectRepository ProjectRepository = new ProjectRepository();
+        TicketRepository TicketRepository = new TicketRepository();
 
         public bool AddANewProject(string projectManagerId, string projectName)
         {
@@ -58,6 +59,16 @@ namespace Shadow.BL
                 return projects;
         }
 
+        public Project GetProject(int projectId)
+        {
+            return ProjectRepository.GetAProject(projectId);
+        }
+
+        public List<ApplicationUser> GetAllUsers()
+        {
+            return UserAndRolesRepository.GetAllUsers();
+        }
+
         public bool AssignUserToAProject(string projectMgrId, string userId, int projectId)
         {
             if (UserAndRolesRepository.CheckIfUserIsInRole(projectMgrId, "project manager"))
@@ -86,6 +97,88 @@ namespace Shadow.BL
             }
             else
                 return false;
+        }
+
+        public List<Ticket> GetAllTickets(string userId)
+        {
+            List<Ticket> tickets = new List<Ticket>();
+
+            if (UserAndRolesRepository.CheckIfUserIsInRole(userId, "project manager"))
+            {
+                tickets = TicketRepository.GetAllTicketsFromProject(userId);
+            }
+
+            return tickets;
+        }
+
+        public bool EditTicket(string userId, Ticket ticket)
+        {
+            if (UserAndRolesRepository.CheckIfUserIsInRole(userId, "project manager"))
+            {
+                TicketRepository.EditTicket(ticket);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public List<TicketType> TicketTypes()
+        {
+            return TicketRepository.AllTicketTypes();
+        }
+
+        public List<TicketStatus> TicketStatuses()
+        {
+            return TicketRepository.TicketStatuses();
+        }
+
+        public List<TicketPrioritie> TicketPriorities()
+        {
+            return TicketRepository.TicketPriorities();
+        }
+
+        public Ticket GetTicket(int ticketId)
+        {
+            return TicketRepository.GetTicket(ticketId);
+        }
+
+        public bool AssignToDeveloper(string managerId, int ticketId, string assignedToId)
+        {
+            if (UserAndRolesRepository.CheckIfUserIsInRole(managerId, "project manager"))
+            {
+                var result = TicketRepository.AssignToDeveloper(ticketId, assignedToId);
+
+                if (result)
+                    return true;
+                else
+                    return false;
+            }
+            else
+                return false;
+        }
+
+        public string GetRoleId(string roleName)
+        {
+            return UserAndRolesRepository.GetRoleId(roleName);
+        }
+
+        public bool UnAssignTicket(string managerId, int ticketId)
+        {
+            if (UserAndRolesRepository.CheckIfUserIsInRole(managerId, "project manager"))
+            {
+                var result = TicketRepository.UnAssignTicket(ticketId);
+
+                if (result)
+                    return true;
+                else
+                    return false;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

@@ -176,5 +176,21 @@ namespace Shadow.Controllers
 
             return View(AllTickets.ToPagedList(pageNumber, pageSize));
         }
+
+        public ActionResult AddComment(int ticketId)
+        {
+            ViewBag.ticketId = ticketId;
+            return View();
+        }
+        [HttpPost]
+        public ActionResult AddComment(int ticketId, string commentText)
+        {
+            var result = AdminBusinessLayer.AddCommentOnTicket(User.Identity.GetUserId(), ticketId, commentText);
+
+            if (result)
+                return RedirectToAction("GetAllTickets");
+            else
+                return View(ticketId);
+        }
     }
 }

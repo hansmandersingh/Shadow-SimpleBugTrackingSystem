@@ -22,6 +22,14 @@ namespace Shadow.Controllers
             var projects = DeveloperBusinessLayer.AllProject(User.Identity.GetUserId());
             return View(projects);
         }
+        public ActionResult GetAllTickets()
+        {
+            return View(DeveloperBusinessLayer.GetAllTickets(User.Identity.GetUserId()));
+        }
+        public ActionResult GetAllTicketAssignToDeveloper()
+        {
+            return View(DeveloperBusinessLayer.ticketsAssignToDeveloper(User.Identity.GetUserId()));
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

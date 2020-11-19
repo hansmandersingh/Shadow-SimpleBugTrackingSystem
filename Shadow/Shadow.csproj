@@ -320,6 +320,8 @@
     <Content Include="Views\Admin\ViewAllAttachments.cshtml" />
     <Content Include="Views\ProjectManager\AddAttachment.cshtml" />
     <Content Include="Views\ProjectManager\ViewAllAttachments.cshtml" />
+    <Content Include="Views\Developers\AddAttachment.cshtml" />
+    <Content Include="Views\Developers\ViewAllAttachments.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

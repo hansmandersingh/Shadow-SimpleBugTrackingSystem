@@ -8,6 +8,13 @@
 
 Order By: <p style="display:inline">@Html.ActionLink("Order by Ascending", "GetAllTickets", new { sortOrder = "OrderByAscending" })</p> | <p style="display:inline">@Html.ActionLink("Order by Descending", "GetAllTickets", new { sortOrder = "OrderByDescending" })</p>
 
+@using (Html.BeginForm())
+{
+    <p>
+        Find by name: @Html.TextBox("searchString")
+        <input type="submit" value="Search" />
+    </p>
+}
 
 <table class="table">
     <tr>

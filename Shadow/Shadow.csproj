@@ -317,6 +317,8 @@
     <Content Include="Views\ProjectManager\AddComment.cshtml" />
     <Content Include="Views\ProjectManager\ShowAllComments.cshtml" />
     <Content Include="Views\Submitters\GetAllTickets.cshtml" />
+    <Content Include="Views\Developers\AddComment.cshtml" />
+    <Content Include="Views\Developers\ShowAllComments.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

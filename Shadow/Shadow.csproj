@@ -332,10 +332,12 @@
     <Content Include="Views\Developers\ShowAllComments.cshtml" />
     <Content Include="Views\Submitters\AddComment.cshtml" />
     <Content Include="Views\Submitters\GetAllTickets.cshtml" />
-    <Content Include="Views\Submitters\AllTickets.cshtml" />
     <Content Include="Views\Submitters\ShowAllComments.cshtml" />
     <Content Include="Views\Admin\TicketHistory.cshtml" />
     <Content Include="Views\ProjectManager\TicketHistory.cshtml" />
+    <Content Include="Views\Submitters\Index.cshtml" />
+    <Content Include="Views\Submitters\EditTicket.cshtml" />
+    <Content Include="Views\Submitters\TicketHistory.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

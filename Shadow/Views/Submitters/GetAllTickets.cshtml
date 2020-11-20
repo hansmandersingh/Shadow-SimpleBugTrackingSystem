@@ -9,8 +9,8 @@
 
 <h2>All Tickets</h2>
 
-Order By: <p style="display:inline">@Html.ActionLink("Order by Ascending", "GetAllTickets", new { sortOrder = "OrderByAscending", currentFilter = ViewBag.CurrentFilter })</p> |
- <p style="display:inline">@Html.ActionLink("Order by Descending", "GetAllTickets", new { sortOrder = "OrderByDescending", currentFilter = ViewBag.CurrentFilter })</p>
+Order By: <p style="display:inline">@Html.ActionLink("Order by Ascending", "GetAllTickets", new { sortingOrder = "OrderByAscending", currentFilter = ViewBag.CurrentFilter })</p> |
+<p style="display:inline">@Html.ActionLink("Order by Descending", "GetAllTickets", new { sortingOrder = "OrderByDescending", currentFilter = ViewBag.CurrentFilter })</p>
 
 @using (Html.BeginForm("GetAllTickets", "Submitters", FormMethod.Get))
 {
@@ -58,7 +58,9 @@ Order By: <p style="display:inline">@Html.ActionLink("Order by Ascending", "GetA
                 @if (item.TicketComments.Count != 0)
                 {@Html.ActionLink("Show all comments", "ShowAllComments", new { ticketId = item.Id }, null)}
                 | @Html.ActionLink("Add an Attachment", "AddAttachment", new { ticketId = item.Id }, null) | @if (item.TicketAttachements.Count != 0)
-                {@Html.ActionLink("View all attachments", "ViewAllAttachments", new { ticketId = item.Id }, null)}
+                {@Html.ActionLink("View all attachments", "ViewAllAttachments", new { ticketId = item.Id }, null)} 
+
+                @Html.ActionLink("Show Ticket History", "TicketHistory", new { ticketId = item.Id }, null)
             </td>
         </tr>
     }
@@ -68,4 +70,4 @@ Order By: <p style="display:inline">@Html.ActionLink("Order by Ascending", "GetA
 Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 
 @Html.PagedListPager(Model, page => Url.Action("GetAllTickets",
-    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+    new { page, sortingOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

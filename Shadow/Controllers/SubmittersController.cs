@@ -89,6 +89,45 @@ namespace Shadow.Controllers
 
             return View(Tickets.ToPagedList(pageNumber, pageSize));
         }
+        public ActionResult EditTicket(int ticketId)
+        {
+            var ticket = SubmitterBusinessLayer.GetTicket(ticketId);
+
+            ViewBag.TicketStatusList = SubmitterBusinessLayer.TicketStatuses();
+            ViewBag.TicketPrioritiesList = SubmitterBusinessLayer.AllTicketPriorities();
+            ViewBag.TicketTypeList = SubmitterBusinessLayer.TicketTypes();
+            return View(ticket);
+        }
+        [HttpPost]
+        public ActionResult EditTicket(int ticketId, string title, string description, int ticketStatusId, int ticketPrioritieId, int ticketTypeId)
+        {
+            var sendTicket = SubmitterBusinessLayer.GetTicket(ticketId);
+            Ticket ticket = new Ticket()
+            {
+                Id = ticketId,
+                Title = title,
+                Description = description,
+                TicketStatusId = ticketStatusId,
+                TicketPrioritieId = ticketPrioritieId,
+                TicketTypeId = ticketTypeId,
+                Updated = DateTime.Now,
+                Created = sendTicket.Created,
+                ProjectId = sendTicket.ProjectId,
+                OwnerId = sendTicket.OwnerId,
+                AssignedToUserId = sendTicket.AssignedToUserId,
+            };
+
+            var result = SubmitterBusinessLayer.EditTicket(User.Identity.GetUserId(), ticket);
+
+            ViewBag.TicketStatusList = SubmitterBusinessLayer.TicketStatuses();
+            ViewBag.TicketPrioritiesList = SubmitterBusinessLayer.AllTicketPriorities();
+            ViewBag.TicketTypeList = SubmitterBusinessLayer.TicketTypes();
+
+            if (result)
+                return RedirectToAction("GetAllTickets");
+            else
+                return RedirectToAction("Index");
+        }
 
         public ActionResult AddComment(int ticketId)
         {
@@ -130,6 +169,11 @@ namespace Shadow.Controllers
         public ActionResult ViewAllAttachments(int ticketId)
         {
             return View(SubmitterBusinessLayer.ShowAllAttachments(ticketId));
+        }
+
+        public ActionResult TicketHistory(int ticketId)
+        {
+            return View(SubmitterBusinessLayer.FullHistory(ticketId));
         }
     }
 }

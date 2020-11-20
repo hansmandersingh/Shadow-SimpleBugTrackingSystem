@@ -183,5 +183,38 @@ namespace Shadow.BL
         {
             return TicketRepository.ShowAllAttachments(ticketId);
         }
+
+        public bool EditTicket(string userId, Ticket ticket)
+        {
+            if (UserAndRolesRepository.CheckIfUserIsInRole(userId, "admin"))
+            {
+                TicketRepository.EditTicket(ticket, userId);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public Ticket GetTicket(int ticketId)
+        {
+            return TicketRepository.GetTicket(ticketId);
+        }
+
+        public List<TicketType> TicketTypes()
+        {
+            return TicketRepository.AllTicketTypes();
+        }
+
+        public List<TicketStatus> TicketStatuses()
+        {
+            return TicketRepository.TicketStatuses();
+        }
+
+        public List<TicketPrioritie> TicketPriorities()
+        {
+            return TicketRepository.TicketPriorities();
+        }
     }
 }

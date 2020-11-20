@@ -177,6 +177,46 @@ namespace Shadow.Controllers
             return View(AllTickets.ToPagedList(pageNumber, pageSize));
         }
 
+        public ActionResult EditTicket(int ticketId)
+        {
+            var ticket = AdminBusinessLayer.GetTicket(ticketId);
+
+            ViewBag.TicketStatusList = AdminBusinessLayer.TicketStatuses();
+            ViewBag.TicketPrioritiesList = AdminBusinessLayer.TicketPriorities();
+            ViewBag.TicketTypeList = AdminBusinessLayer.TicketTypes();
+            return View(ticket);
+        }
+        [HttpPost]
+        public ActionResult EditTicket(int ticketId, string title, string description, int ticketStatusId, int ticketPrioritieId, int ticketTypeId)
+        {
+            var sendTicket = AdminBusinessLayer.GetTicket(ticketId);
+            Ticket ticket = new Ticket()
+            {
+                Id = ticketId,
+                Title = title,
+                Description = description,
+                TicketStatusId = ticketStatusId,
+                TicketPrioritieId = ticketPrioritieId,
+                TicketTypeId = ticketTypeId,
+                Updated = DateTime.Now,
+                Created = sendTicket.Created,
+                ProjectId = sendTicket.ProjectId,
+                OwnerId = sendTicket.OwnerId,
+                AssignedToUserId = sendTicket.AssignedToUserId,
+            };
+
+            var result = AdminBusinessLayer.EditTicket(User.Identity.GetUserId(), ticket);
+
+            ViewBag.TicketStatusList = AdminBusinessLayer.TicketStatuses();
+            ViewBag.TicketPrioritiesList = AdminBusinessLayer.TicketPriorities();
+            ViewBag.TicketTypeList = AdminBusinessLayer.TicketTypes();
+
+            if (result)
+                return RedirectToAction("GetAllTickets");
+            else
+                return RedirectToAction("Index");
+        }
+
         public ActionResult AddComment(int ticketId)
         {
             ViewBag.ticketId = ticketId;

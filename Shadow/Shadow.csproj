@@ -307,7 +307,6 @@
     <Content Include="Views\ProjectManager\AssignToProject.cshtml" />
     <Content Include="Views\ProjectManager\UnAssignFromProject.cshtml" />
     <Content Include="Views\Submitters\CreateTicket.cshtml" />
-    <Content Include="Views\Developers\AllProject.cshtml" />
     <Content Include="Views\Submitters\AllProjects.cshtml" />
     <Content Include="Views\Admin\GetAllTickets.cshtml" />
     <Content Include="Views\ProjectManager\GetAllTickets.cshtml" />
@@ -328,6 +327,13 @@
     <Content Include="Views\Submitters\AddAttachment.cshtml" />
     <Content Include="Views\Submitters\ViewAllAttachments.cshtml" />
     <Content Include="Views\Admin\EditTicket.cshtml" />
+    <Content Include="Views\Developers\AddComment.cshtml" />
+    <Content Include="Views\Developers\AllProjects.cshtml" />
+    <Content Include="Views\Developers\ShowAllComments.cshtml" />
+    <Content Include="Views\Submitters\AddComment.cshtml" />
+    <Content Include="Views\Submitters\GetAllTickets.cshtml" />
+    <Content Include="Views\Submitters\AllTickets.cshtml" />
+    <Content Include="Views\Submitters\ShowAllComments.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -239,5 +239,10 @@ namespace Shadow.BL
         {
             return TicketRepository.TicketType(TicketTypeId);
         }
+
+        public List<TicketHistorie> FullHistory(int ticketId)
+        {
+            return TicketRepository.FullHistory(ticketId);
+        }
     }
 }

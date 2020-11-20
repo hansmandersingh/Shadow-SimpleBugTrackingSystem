@@ -248,5 +248,10 @@ namespace Shadow.Controllers
         {
             return View(ProjectManagerBusinessLayer.ShowAllAttachments(ticketId));
         }
+
+        public ActionResult TicketHistory(int ticketId)
+        {
+            return View(ProjectManagerBusinessLayer.FullHistory(ticketId));
+        }
     }
 }

@@ -115,7 +115,7 @@ namespace Shadow.BL
         {
             if (UserAndRolesRepository.CheckIfUserIsInRole(userId, "project manager"))
             {
-                TicketRepository.EditTicket(ticket);
+                TicketRepository.EditTicket(ticket, userId);
                 return true;
             }
             else

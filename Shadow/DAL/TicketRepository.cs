@@ -40,13 +40,13 @@ namespace Shadow.DAL
             }
         }
 
-        public bool EditTicket(Ticket ticket)
+        public bool EditTicket(Ticket ticket, string UserIdForHistory)
         {
             Ticket oldTicket = db.Tickets.FirstOrDefault(t => t.Id == ticket.Id);
 
             if(oldTicket != null)
             {
-                CompareObjects(oldTicket, ticket);
+                CompareObjects(oldTicket, ticket, UserIdForHistory);
                 oldTicket.OwnerId = ticket.OwnerId;
                 oldTicket.ProjectId = ticket.ProjectId;
                 oldTicket.TicketPrioritieId = ticket.TicketPrioritieId;
@@ -67,7 +67,7 @@ namespace Shadow.DAL
             }
         }
 
-        public void CompareObjects(Ticket ticket1, Ticket ticket2)
+        public void CompareObjects(Ticket ticket1, Ticket ticket2, string UserId)
         {
             var comparer = new Comparer();
             IEnumerable<Difference> differences;
@@ -80,7 +80,7 @@ namespace Shadow.DAL
             {
                 TicketHistorie historie = new TicketHistorie()
                 {
-                    UserId = ticket1.OwnerId,
+                    UserId = UserId,
                     TicketId = ticket1.Id,
                     Property = diff.MemberPath.ToString(),
                     OldValue = diff.Value1.ToString(),

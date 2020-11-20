@@ -45,6 +45,7 @@ namespace Shadow.DAL
 
             if(oldTicket != null)
             {
+                CompareObjects(oldTicket, ticket);
                 oldTicket.OwnerId = ticket.OwnerId;
                 oldTicket.ProjectId = ticket.ProjectId;
                 oldTicket.TicketAttachements = ticket.TicketAttachements;
@@ -66,6 +67,37 @@ namespace Shadow.DAL
             else
             {
                 return false;
+            }
+        }
+
+        public void CompareObjects(Ticket ticket1, Ticket ticket2)
+        {
+            var oType = ticket1.GetType();
+
+            foreach(var property in oType.GetProperties())
+            {
+                var oldValue = property.GetValue(ticket1, null);
+                var newValue = property.GetValue(ticket2, null);
+
+                if(!object.Equals(oldValue, newValue))
+                {
+                    var soldValue = oldValue == null ? "null" : oldValue.ToString();
+                    var snewValue = newValue == null ? "null" : newValue.ToString();
+
+                    TicketHistorie historie = new TicketHistorie()
+                    {
+                        UserId = ticket1.OwnerId,
+                        TicketId = ticket1.Id,
+                        Property = property.ToString(),
+                        OldValue = soldValue,
+                        NewValue = snewValue
+                    };
+
+                    ticket1.TicketHistories.Add(historie);
+                    db.TicketHistories.Add(historie);
+                    db.Entry(ticket1).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
             }
         }
 

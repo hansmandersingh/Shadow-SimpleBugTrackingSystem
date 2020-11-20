@@ -1,5 +1,6 @@
 ﻿@model PagedList.IPagedList<Shadow.Models.Ticket>
-@using PagedList.Mvc;
+@using PagedList.Mvc
+
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
@@ -8,10 +9,10 @@
 
 <h2>All Tickets</h2>
 
-Order By: <p style="display:inline">@Html.ActionLink("Order by Ascending", "GetAllTickets", new { sortOrder = "OrderByAscending", currentFilter = ViewBag.CurrentFilter })</p> | 
-<p style="display:inline">@Html.ActionLink("Order by Descending", "GetAllTickets", new { sortOrder = "OrderByDescending", currentFilter = ViewBag.CurrentFilter })</p>
+Order By: <p style="display:inline">@Html.ActionLink("Order by Ascending", "GetAllTickets", new { sortOrder = "OrderByAscending", currentFilter = ViewBag.CurrentFilter })</p> |
+ <p style="display:inline">@Html.ActionLink("Order by Descending", "GetAllTickets", new { sortOrder = "OrderByDescending", currentFilter = ViewBag.CurrentFilter })</p>
 
-@using (Html.BeginForm("GetAllTickets", "Submitter", FormMethod.Get))
+@using (Html.BeginForm("GetAllTickets", "Submitters", FormMethod.Get))
 {
     <p>
         Find by name: @Html.TextBox("searchString", ViewBag.CurrentFilter as string)
@@ -50,6 +51,14 @@ Order By: <p style="display:inline">@Html.ActionLink("Order by Ascending", "GetA
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Updated)
+            </td>
+            <td>
+                @Html.ActionLink("Edit Ticket", "EditTicket", new { ticketId = item.Id }, null) |
+                @Html.ActionLink("Add a Comment", "AddComment", new { ticketId = item.Id }, null)
+                @if (item.TicketComments.Count != 0)
+                {@Html.ActionLink("Show all comments", "ShowAllComments", new { ticketId = item.Id }, null)}
+                | @Html.ActionLink("Add an Attachment", "AddAttachment", new { ticketId = item.Id }, null) | @if (item.TicketAttachements.Count != 0)
+                {@Html.ActionLink("View all attachments", "ViewAllAttachments", new { ticketId = item.Id }, null)}
             </td>
         </tr>
     }

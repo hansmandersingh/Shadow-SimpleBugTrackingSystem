@@ -3,11 +3,11 @@
     ViewBag.Title = "AddComment";
 }
 
-<h2>Add Comment</h2>
+<h2>Add a Comment</h2>
+
 @using (Html.BeginForm())
 {
     @Html.Hidden("ticketId", (int)ViewBag.ticketId)
     <h4>Enter comment here :</h4> @Html.TextArea("commentText")
     <input type="submit" value="Add" name="Add" />
 }
-

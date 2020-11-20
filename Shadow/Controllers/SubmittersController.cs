@@ -20,6 +20,11 @@ namespace Shadow.Controllers
         SubmitterBusinessLayer SubmitterBusinessLayer = new SubmitterBusinessLayer();
         TicketRepository TicketRepository = new TicketRepository();
 
+        public ActionResult Index()
+        {
+            return View();
+        }
+
         public ActionResult CreateTicket()
         {
             ViewBag.ProjectList = SubmitterBusinessLayer.ListProjects(User.Identity.GetUserId());
@@ -42,7 +47,7 @@ namespace Shadow.Controllers
 
         public ActionResult AllProjects()
         {
-            var allProjects = SubmitterBusinessLayer.AllProject(User.Identity.GetUserId());
+            var allProjects = SubmitterBusinessLayer.ListProjects(User.Identity.GetUserId());
             return View(allProjects);
         }
 

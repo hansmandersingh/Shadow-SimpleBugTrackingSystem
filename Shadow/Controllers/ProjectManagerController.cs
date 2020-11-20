@@ -164,6 +164,8 @@ namespace Shadow.Controllers
                 Updated = DateTime.Now,
                 Created = sendTicket.Created,
                 ProjectId = sendTicket.ProjectId,
+                OwnerId = sendTicket.OwnerId,
+                AssignedToUserId = sendTicket.AssignedToUserId,
             };
 
             var result = ProjectManagerBusinessLayer.EditTicket(User.Identity.GetUserId(), ticket);

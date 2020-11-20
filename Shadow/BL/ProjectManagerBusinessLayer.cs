@@ -224,5 +224,20 @@ namespace Shadow.BL
         {
             return TicketRepository.ShowAllAttachments(ticketId);
         }
+
+        public TicketStatus TicketStatus(int ticketStatusId)
+        {
+            return TicketRepository.TicketStatus(ticketStatusId);
+        }
+
+        public TicketPrioritie TicketPrioritie(int ticketPrioritieId)
+        {
+            return TicketRepository.TicketPrioritie(ticketPrioritieId);
+        }
+
+        public TicketType TicketType(int TicketTypeId)
+        {
+            return TicketRepository.TicketType(TicketTypeId);
+        }
     }
 }

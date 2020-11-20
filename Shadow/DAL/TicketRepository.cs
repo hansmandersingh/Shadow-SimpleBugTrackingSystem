@@ -1,4 +1,5 @@
-﻿using Shadow.Models;
+﻿using ObjectsComparer;
+using Shadow.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -41,17 +42,13 @@ namespace Shadow.DAL
 
         public bool EditTicket(Ticket ticket)
         {
-            var oldTicket = db.Tickets.Find(ticket.Id);
+            Ticket oldTicket = db.Tickets.FirstOrDefault(t => t.Id == ticket.Id);
 
             if(oldTicket != null)
             {
                 CompareObjects(oldTicket, ticket);
                 oldTicket.OwnerId = ticket.OwnerId;
                 oldTicket.ProjectId = ticket.ProjectId;
-                oldTicket.TicketAttachements = ticket.TicketAttachements;
-                oldTicket.TicketComments = ticket.TicketComments;
-                oldTicket.TicketHistories = ticket.TicketHistories;
-                oldTicket.TicketNotifications = ticket.TicketNotifications;
                 oldTicket.TicketPrioritieId = ticket.TicketPrioritieId;
                 oldTicket.TicketStatusId = ticket.TicketStatusId;
                 oldTicket.TicketTypeId = ticket.TicketTypeId;
@@ -72,33 +69,27 @@ namespace Shadow.DAL
 
         public void CompareObjects(Ticket ticket1, Ticket ticket2)
         {
-            var oType = ticket1.GetType();
+            var comparer = new Comparer();
+            IEnumerable<Difference> differences;
+            comparer.AddComparerOverride<ICollection<TicketComment>>(DoNotCompareValueComparer.Instance);
+            comparer.AddComparerOverride<ICollection<TicketAttachement>>(DoNotCompareValueComparer.Instance);
+            comparer.AddComparerOverride<ICollection<TicketHistorie>>(DoNotCompareValueComparer.Instance);
+            var isEqual = comparer.Compare(ticket1, ticket2, out differences);
 
-            foreach(var property in oType.GetProperties())
+            foreach(var diff in differences)
             {
-                var oldValue = property.GetValue(ticket1, null);
-                var newValue = property.GetValue(ticket2, null);
-
-                if(!object.Equals(oldValue, newValue))
+                TicketHistorie historie = new TicketHistorie()
                 {
-                    var soldValue = oldValue == null ? "null" : oldValue.ToString();
-                    var snewValue = newValue == null ? "null" : newValue.ToString();
+                    UserId = ticket1.OwnerId,
+                    TicketId = ticket1.Id,
+                    Property = diff.MemberPath.ToString(),
+                    OldValue = diff.Value1.ToString(),
+                    NewValue = diff.Value2.ToString(),
+                };
 
-                    TicketHistorie historie = new TicketHistorie()
-                    {
-                        UserId = ticket1.OwnerId,
-                        TicketId = ticket1.Id,
-                        Property = property.ToString(),
-                        OldValue = soldValue,
-                        NewValue = snewValue
-                    };
-
-                    ticket1.TicketHistories.Add(historie);
-                    db.TicketHistories.Add(historie);
-                    db.Entry(ticket1).State = EntityState.Modified;
-                    db.SaveChanges();
-                }
-            }
+                ticket2.TicketHistories.Add(historie);
+                db.TicketHistories.Add(historie);
+            } 
         }
 
         public Ticket GetTicket(int ticketId)
@@ -230,6 +221,21 @@ namespace Shadow.DAL
         public List<TicketAttachement> ShowAllAttachments(int ticketId)
         {
             return db.TicketAttachements.Include(i => i.User).Include(i => i.Ticket).Where(t => t.TicketId == ticketId).ToList();
+        }
+
+        public TicketStatus TicketStatus(int ticketStatusId)
+        {
+            return db.TicketStatuses.FirstOrDefault(t => t.Id == ticketStatusId);
+        }
+
+        public TicketPrioritie TicketPrioritie(int ticketPrioritieId)
+        {
+            return db.TicketPriorities.FirstOrDefault(t => t.Id == ticketPrioritieId);
+        }
+
+        public TicketType TicketType(int TicketTypeId)
+        {
+            return db.TicketTypes.FirstOrDefault(t => t.Id == TicketTypeId);
         }
     }
 }

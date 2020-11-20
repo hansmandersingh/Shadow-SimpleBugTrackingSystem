@@ -244,5 +244,10 @@ namespace Shadow.DAL
         {
             return db.TicketTypes.FirstOrDefault(t => t.Id == TicketTypeId);
         }
+
+        public List<TicketHistorie> FullHistory(int ticketId)
+        {
+            return db.TicketHistories.Include(i => i.User).Include(i => i.Ticket).Where(t => t.TicketId == ticketId).ToList();
+        }
     }
 }

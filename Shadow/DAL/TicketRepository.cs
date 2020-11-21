@@ -52,6 +52,19 @@ namespace Shadow.DAL
         {
             Ticket oldTicket = db.Tickets.FirstOrDefault(t => t.Id == ticket.Id);
 
+            if(UserAndRolesRepository.CheckIfUserIsInRole(oldTicket.AssignedToUserId, "developer"))
+            {
+                TicketNotification notification = new TicketNotification()
+                {
+                    TicketId = oldTicket.Id,
+                    UserId = oldTicket.OwnerId,
+                    NotificationDescription = "A task has been Edited which was assigned to you!"
+                };
+
+                db.TicketNotifications.Add(notification);
+                oldTicket.TicketNotifications.Add(notification);
+            }
+
             if(oldTicket != null)
             {
                 CompareObjects(oldTicket, ticket, UserIdForHistory);
@@ -155,7 +168,8 @@ namespace Shadow.DAL
                 TicketNotification notification = new TicketNotification()
                 {
                     TicketId = ticketId,
-                    UserId = assignedToId
+                    UserId = assignedToId, 
+                    NotificationDescription = "A task has been Assigned to you! Head over to All Tickets to see your tickets!"
                 };
 
                 db.TicketNotifications.Add(notification);
@@ -193,6 +207,19 @@ namespace Shadow.DAL
             var ticket = db.Tickets.FirstOrDefault(t => t.Id == ticketId);
             TicketComment comment = new TicketComment() { TicketId = ticketId, UserId = userId, Comment = commentText };
 
+            if(UserAndRolesRepository.CheckIfUserIsInRole(ticket.AssignedToUserId, "developer"))
+            {
+                TicketNotification notification = new TicketNotification()
+                {
+                    TicketId = ticketId,
+                    UserId = ticket.OwnerId,
+                    NotificationDescription = "A Comment has been made on your ticket!"
+                };
+
+                db.TicketNotifications.Add(notification);
+                ticket.TicketNotifications.Add(notification);
+            }
+
             if (ticket != null)
             {
                 ticket.TicketComments.Add(comment);
@@ -223,6 +250,19 @@ namespace Shadow.DAL
                 FilePath = filePath,
                 Description = description,
             };
+
+            if (UserAndRolesRepository.CheckIfUserIsInRole(ticket.AssignedToUserId, "developer"))
+            {
+                TicketNotification notification = new TicketNotification()
+                {
+                    TicketId = ticketId,
+                    UserId = ticket.OwnerId,
+                    NotificationDescription = "An Attachment has been made on your ticket!"
+                };
+
+                db.TicketNotifications.Add(notification);
+                ticket.TicketNotifications.Add(notification);
+            }
 
             if (ticket != null)
             {

@@ -224,7 +224,7 @@ namespace Shadow.BL
 
         public bool AssignToDeveloper(string userId ,int ticketId, string assignedToId)
         {
-            if (UserAndRolesRepository.CheckIfUserIsInRole(userId, "Admin"))
+            if (UserAndRolesRepository.CheckIfUserIsInRole(userId, "admin"))
             {
                 var result = TicketRepository.AssignToDeveloper(ticketId, assignedToId);
 
@@ -238,6 +238,23 @@ namespace Shadow.BL
                 return false;
             }
              
+        }
+
+        public bool UnAssignTicket(string userId, int ticketId)
+        {
+            if(UserAndRolesRepository.CheckIfUserIsInRole(userId, "admin"))
+            {
+                var result = TicketRepository.UnAssignTicket(ticketId);
+
+                if (result)
+                    return true;
+                else
+                    return false;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

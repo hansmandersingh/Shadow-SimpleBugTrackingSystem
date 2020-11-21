@@ -217,6 +217,33 @@ namespace Shadow.Controllers
                 return RedirectToAction("Index");
         }
 
+        public ActionResult AssignTicketToUser(int ticketId)
+        {
+            ViewBag.DevelopersList = AdminBusinessLayer.GetAllUsers().ToList();
+            ViewBag.ticketId = ticketId;
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult AssignTicketToUser(int ticketId, string userId)
+        {
+            var result = AdminBusinessLayer.AssignToDeveloper(User.Identity.GetUserId(), ticketId, userId);
+
+            ViewBag.DevelopersList = AdminBusinessLayer.GetAllUsers().ToList();
+            ViewBag.ticketId = ticketId;
+            if (result)
+                return RedirectToAction("GetAllTickets");
+            else
+                return RedirectToAction("Index");
+        }
+
+        public ActionResult UnAssignTicket(int ticketId)
+        {
+            AdminBusinessLayer.UnAssignTicket(User.Identity.GetUserId(), ticketId);
+
+            return RedirectToAction("GetAllTickets");
+        }
+
         public ActionResult AddComment(int ticketId)
         {
             ViewBag.ticketId = ticketId;
@@ -263,5 +290,7 @@ namespace Shadow.Controllers
         {
             return View(AdminBusinessLayer.FullHistory(ticketId));
         }
+
+
     }
 }

@@ -221,5 +221,40 @@ namespace Shadow.BL
         {
             return TicketRepository.FullHistory(ticketId);
         }
+
+        public bool AssignToDeveloper(string userId ,int ticketId, string assignedToId)
+        {
+            if (UserAndRolesRepository.CheckIfUserIsInRole(userId, "admin"))
+            {
+                var result = TicketRepository.AssignToDeveloper(ticketId, assignedToId);
+
+                if (result)
+                    return true;
+                else
+                    return false;
+            }
+            else
+            {
+                return false;
+            }
+             
+        }
+
+        public bool UnAssignTicket(string userId, int ticketId)
+        {
+            if(UserAndRolesRepository.CheckIfUserIsInRole(userId, "admin"))
+            {
+                var result = TicketRepository.UnAssignTicket(ticketId);
+
+                if (result)
+                    return true;
+                else
+                    return false;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }

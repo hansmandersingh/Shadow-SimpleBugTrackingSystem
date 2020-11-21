@@ -70,6 +70,13 @@ Order By: <p style="display:inline">@Html.ActionLink("Order by Ascending", "GetA
             </td>
             <td>
                 @Html.ActionLink("Edit Ticket", "EditTicket", new { ticketId = item.Id }, null) | 
+                @if(item.AssignedToUserId != null)
+                {
+                    @Html.ActionLink("UnAssign Ticket", "UnAssignTicket", new { ticketId = item.Id }, null)
+                } else
+                {
+                    @Html.ActionLink("Assign Task to User", "AssignTicketToUser", new { ticketId = item.Id }, null)
+                } |
                 @Html.ActionLink("Add Comment", "AddComment", "Admin", new { ticketId = item.Id }, null) | @if (item.TicketComments.Count != 0)
                 {@Html.ActionLink("View All Comments", "AllComments", new { ticketId = item.Id }, null)} |
                 @Html.ActionLink("Add Attachment", "AddAttachment", new { ticketId = item.Id }, null) | @if (item.TicketAttachements.Count != 0)

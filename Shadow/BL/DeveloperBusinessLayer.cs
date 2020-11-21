@@ -103,5 +103,9 @@ namespace Shadow.BL
         {
             return TicketRepository.ShowAllAttachments(ticketId);
         }
+        public List<TicketHistorie> FullHistory(int ticketId)
+        {
+            return TicketRepository.FullHistory(ticketId);
+        }
     }
 }

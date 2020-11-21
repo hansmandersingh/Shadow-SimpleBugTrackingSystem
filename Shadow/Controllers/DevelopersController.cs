@@ -135,7 +135,10 @@ namespace Shadow.Controllers
         {
             return View(DeveloperBusinessLayer.ShowAllAttachments(ticketId));
         }
-
+        public ActionResult TicketHistory(int ticketId)
+        {
+            return View(DeveloperBusinessLayer.FullHistory(ticketId));
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

@@ -16,7 +16,7 @@ namespace Shadow.Models
 
     public class TicketNotification: TicketAddOns
     {
-
+        public string NotificationDescription { get; set; }
     }
     public class TicketHistorie : TicketAddOns
     {

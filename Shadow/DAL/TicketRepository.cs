@@ -11,6 +11,7 @@ namespace Shadow.DAL
     public class TicketRepository
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+        UserAndRolesRepository UserAndRolesRepository = new UserAndRolesRepository();
         public bool CreateTicket(string title, string ownerId, int projectId, string description, int ticketTypeId, int ticketPrioritiesId, int ticketStatusId)
         {
             Ticket ticket = new Ticket()
@@ -148,6 +149,18 @@ namespace Shadow.DAL
         public bool AssignToDeveloper(int ticketId, string assignedToId)
         {
             var ticket = db.Tickets.FirstOrDefault(t => t.Id == ticketId);
+
+            if (UserAndRolesRepository.CheckIfUserIsInRole(assignedToId, "developer"))
+            {
+                TicketNotification notification = new TicketNotification()
+                {
+                    TicketId = ticketId,
+                    UserId = assignedToId
+                };
+
+                db.TicketNotifications.Add(notification);
+                ticket.TicketNotifications.Add(notification);
+            }
 
             if (ticket != null)
             {

@@ -183,5 +183,78 @@ namespace Shadow.BL
         {
             return TicketRepository.ShowAllAttachments(ticketId);
         }
+
+        public bool EditTicket(string userId, Ticket ticket)
+        {
+            if (UserAndRolesRepository.CheckIfUserIsInRole(userId, "admin"))
+            {
+                TicketRepository.EditTicket(ticket, userId);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public Ticket GetTicket(int ticketId)
+        {
+            return TicketRepository.GetTicket(ticketId);
+        }
+
+        public List<TicketType> TicketTypes()
+        {
+            return TicketRepository.AllTicketTypes();
+        }
+
+        public List<TicketStatus> TicketStatuses()
+        {
+            return TicketRepository.TicketStatuses();
+        }
+
+        public List<TicketPrioritie> TicketPriorities()
+        {
+            return TicketRepository.TicketPriorities();
+        }
+
+        public List<TicketHistorie> FullHistory(int ticketId)
+        {
+            return TicketRepository.FullHistory(ticketId);
+        }
+
+        public bool AssignToDeveloper(string userId ,int ticketId, string assignedToId)
+        {
+            if (UserAndRolesRepository.CheckIfUserIsInRole(userId, "admin"))
+            {
+                var result = TicketRepository.AssignToDeveloper(ticketId, assignedToId);
+
+                if (result)
+                    return true;
+                else
+                    return false;
+            }
+            else
+            {
+                return false;
+            }
+             
+        }
+
+        public bool UnAssignTicket(string userId, int ticketId)
+        {
+            if(UserAndRolesRepository.CheckIfUserIsInRole(userId, "admin"))
+            {
+                var result = TicketRepository.UnAssignTicket(ticketId);
+
+                if (result)
+                    return true;
+                else
+                    return false;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }

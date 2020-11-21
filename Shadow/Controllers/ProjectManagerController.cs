@@ -109,7 +109,7 @@ namespace Shadow.Controllers
             List<Ticket> AllTickets;
             ViewBag.CurrentSort = sortOrder;
 
-            if (sortOrder != null)
+            if (searchString != null)
             {
                 page = 1;
             } else
@@ -164,6 +164,8 @@ namespace Shadow.Controllers
                 Updated = DateTime.Now,
                 Created = sendTicket.Created,
                 ProjectId = sendTicket.ProjectId,
+                OwnerId = sendTicket.OwnerId,
+                AssignedToUserId = sendTicket.AssignedToUserId,
             };
 
             var result = ProjectManagerBusinessLayer.EditTicket(User.Identity.GetUserId(), ticket);
@@ -245,6 +247,11 @@ namespace Shadow.Controllers
         public ActionResult ViewAllAttachments(int ticketId)
         {
             return View(ProjectManagerBusinessLayer.ShowAllAttachments(ticketId));
+        }
+
+        public ActionResult TicketHistory(int ticketId)
+        {
+            return View(ProjectManagerBusinessLayer.FullHistory(ticketId));
         }
     }
 }

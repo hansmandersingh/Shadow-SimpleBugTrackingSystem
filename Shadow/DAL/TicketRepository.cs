@@ -1,4 +1,5 @@
-﻿using Shadow.Models;
+﻿using ObjectsComparer;
+using Shadow.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -24,9 +25,20 @@ namespace Shadow.DAL
                 TicketStatusId = ticketStatusId
             };
 
+            TicketHistorie history = new TicketHistorie()
+            {
+                UserId = ownerId,
+                TicketId = ticket.Id,
+                Property = "Initialized Ticket",
+                OldValue = "-",
+                NewValue = "-"
+            };
+
             if(!db.Tickets.Any(t => t.Title == ticket.Title))
             {
+                ticket.TicketHistories.Add(history);
                 db.Tickets.Add(ticket);
+                db.TicketHistories.Add(history);
                 db.SaveChanges();
                 return true;
             } else
@@ -35,18 +47,15 @@ namespace Shadow.DAL
             }
         }
 
-        public bool EditTicket(Ticket ticket)
+        public bool EditTicket(Ticket ticket, string UserIdForHistory)
         {
-            var oldTicket = db.Tickets.Find(ticket.Id);
+            Ticket oldTicket = db.Tickets.FirstOrDefault(t => t.Id == ticket.Id);
 
             if(oldTicket != null)
             {
+                CompareObjects(oldTicket, ticket, UserIdForHistory);
                 oldTicket.OwnerId = ticket.OwnerId;
                 oldTicket.ProjectId = ticket.ProjectId;
-                oldTicket.TicketAttachements = ticket.TicketAttachements;
-                oldTicket.TicketComments = ticket.TicketComments;
-                oldTicket.TicketHistories = ticket.TicketHistories;
-                oldTicket.TicketNotifications = ticket.TicketNotifications;
                 oldTicket.TicketPrioritieId = ticket.TicketPrioritieId;
                 oldTicket.TicketStatusId = ticket.TicketStatusId;
                 oldTicket.TicketTypeId = ticket.TicketTypeId;
@@ -63,6 +72,31 @@ namespace Shadow.DAL
             {
                 return false;
             }
+        }
+
+        public void CompareObjects(Ticket ticket1, Ticket ticket2, string UserId)
+        {
+            var comparer = new Comparer();
+            IEnumerable<Difference> differences;
+            comparer.AddComparerOverride<ICollection<TicketComment>>(DoNotCompareValueComparer.Instance);
+            comparer.AddComparerOverride<ICollection<TicketAttachement>>(DoNotCompareValueComparer.Instance);
+            comparer.AddComparerOverride<ICollection<TicketHistorie>>(DoNotCompareValueComparer.Instance);
+            var isEqual = comparer.Compare(ticket1, ticket2, out differences);
+
+            foreach(var diff in differences)
+            {
+                TicketHistorie historie = new TicketHistorie()
+                {
+                    UserId = UserId,
+                    TicketId = ticket1.Id,
+                    Property = diff.MemberPath.ToString(),
+                    OldValue = diff.Value1.ToString(),
+                    NewValue = diff.Value2.ToString(),
+                };
+
+                ticket2.TicketHistories.Add(historie);
+                db.TicketHistories.Add(historie);
+            } 
         }
 
         public Ticket GetTicket(int ticketId)
@@ -194,6 +228,26 @@ namespace Shadow.DAL
         public List<TicketAttachement> ShowAllAttachments(int ticketId)
         {
             return db.TicketAttachements.Include(i => i.User).Include(i => i.Ticket).Where(t => t.TicketId == ticketId).ToList();
+        }
+
+        public TicketStatus TicketStatus(int ticketStatusId)
+        {
+            return db.TicketStatuses.FirstOrDefault(t => t.Id == ticketStatusId);
+        }
+
+        public TicketPrioritie TicketPrioritie(int ticketPrioritieId)
+        {
+            return db.TicketPriorities.FirstOrDefault(t => t.Id == ticketPrioritieId);
+        }
+
+        public TicketType TicketType(int TicketTypeId)
+        {
+            return db.TicketTypes.FirstOrDefault(t => t.Id == TicketTypeId);
+        }
+
+        public List<TicketHistorie> FullHistory(int ticketId)
+        {
+            return db.TicketHistories.Include(i => i.User).Include(i => i.Ticket).Where(t => t.TicketId == ticketId).ToList();
         }
     }
 }

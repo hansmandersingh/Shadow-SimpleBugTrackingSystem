@@ -115,7 +115,7 @@ namespace Shadow.BL
         {
             if (UserAndRolesRepository.CheckIfUserIsInRole(userId, "project manager"))
             {
-                TicketRepository.EditTicket(ticket);
+                TicketRepository.EditTicket(ticket, userId);
                 return true;
             }
             else
@@ -223,6 +223,26 @@ namespace Shadow.BL
         public List<TicketAttachement> ShowAllAttachments(int ticketId)
         {
             return TicketRepository.ShowAllAttachments(ticketId);
+        }
+
+        public TicketStatus TicketStatus(int ticketStatusId)
+        {
+            return TicketRepository.TicketStatus(ticketStatusId);
+        }
+
+        public TicketPrioritie TicketPrioritie(int ticketPrioritieId)
+        {
+            return TicketRepository.TicketPrioritie(ticketPrioritieId);
+        }
+
+        public TicketType TicketType(int TicketTypeId)
+        {
+            return TicketRepository.TicketType(TicketTypeId);
+        }
+
+        public List<TicketHistorie> FullHistory(int ticketId)
+        {
+            return TicketRepository.FullHistory(ticketId);
         }
     }
 }

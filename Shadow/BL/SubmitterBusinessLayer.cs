@@ -29,6 +29,19 @@ namespace Shadow.BL
             }
         }
 
+        public bool EditTicket(string userId, Ticket ticket)
+        {
+            if (UserAndRolesRepository.CheckIfUserIsInRole(userId, "submitter"))
+            {
+                TicketRepository.EditTicket(ticket, userId);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         public List<Project> ListProjects(string userId)
         {
             return ProjectRepository.ListProjects(userId);
@@ -47,6 +60,11 @@ namespace Shadow.BL
         public List<TicketStatus> TicketStatuses()
         {
             return TicketRepository.TicketStatuses();
+        }
+
+        public Ticket GetTicket(int ticketId)
+        {
+            return TicketRepository.GetTicket(ticketId);
         }
 
         public List<Project> AllProject(string userId)
@@ -93,6 +111,33 @@ namespace Shadow.BL
         public List<TicketComment> AllComments(int ticketId)
         {
             return TicketRepository.ShowAllComments(ticketId);
+        }
+
+        public bool AddAttachment(string userId, int ticketId, string fileUrl, string filePath, string description)
+        {
+            if (UserAndRolesRepository.CheckIfUserIsInRole(userId, "submitter"))
+            {
+                var result = TicketRepository.AddAttachment(userId, ticketId, fileUrl, filePath, description);
+
+                if (result)
+                    return true;
+                else
+                    return false;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public List<TicketAttachement> ShowAllAttachments(int ticketId)
+        {
+            return TicketRepository.ShowAllAttachments(ticketId);
+        }
+
+        public List<TicketHistorie> FullHistory(int ticketId)
+        {
+            return TicketRepository.FullHistory(ticketId);
         }
     }
 }

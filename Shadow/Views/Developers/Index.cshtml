@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+
+
+<h2>Developer Dashboard</h2>
+
+<h3>
+    
+    @Html.ActionLink("View Notification", "AllNotification","Developers")
+</h3>
+
+<h3>
+    @Html.ActionLink("View all projects in the system", "AllProjects", "Developers")
+</h3>
+
+<h3>
+    @Html.ActionLink("Show all tickets", "GetAllTickets", "Developers")
+</h3>

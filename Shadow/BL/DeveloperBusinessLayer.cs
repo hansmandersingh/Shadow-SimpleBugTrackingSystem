@@ -107,5 +107,9 @@ namespace Shadow.BL
         {
             return TicketRepository.FullHistory(ticketId);
         }
+        public List<TicketNotification> AllNotification(int ticketId)
+        {
+            return TicketRepository.AllNotificaion(ticketId);
+        }
     }
 }

@@ -302,5 +302,9 @@ namespace Shadow.DAL
         {
             return db.TicketHistories.Include(i => i.User).Include(i => i.Ticket).Where(t => t.TicketId == ticketId).ToList();
         }
+        public List<TicketNotification> AllNotificaion(int ticketId)
+        {
+            return db.TicketNotifications.Where(t => t.TicketId == ticketId).ToList();
+        }
     }
 }

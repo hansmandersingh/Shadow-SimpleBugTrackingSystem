@@ -344,6 +344,7 @@
     <Content Include="Views\Submitters\TicketHistory.cshtml" />
     <Content Include="Views\Admin\AssignTicketToUser.cshtml" />
     <Content Include="Views\Developers\TicketHistory.cshtml" />
+    <Content Include="Views\Developers\AllNotification.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

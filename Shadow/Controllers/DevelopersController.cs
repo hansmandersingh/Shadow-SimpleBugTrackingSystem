@@ -139,6 +139,10 @@ namespace Shadow.Controllers
         {
             return View(DeveloperBusinessLayer.FullHistory(ticketId));
         }
+        public ActionResult AllNotification(int ticketId)
+        {
+            return View(DeveloperBusinessLayer.AllNotification(ticketId));
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -147,5 +151,6 @@ namespace Shadow.Controllers
             }
             base.Dispose(disposing);
         }
+
     }
 }

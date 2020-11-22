@@ -56,7 +56,7 @@ namespace Shadow.Controllers
             List<Ticket> Tickets;
             ViewBag.currentSort = sortingOrder;
 
-            if(sortingOrder != null)
+            if(searchString != null)
             {
                 page = 1;
             }

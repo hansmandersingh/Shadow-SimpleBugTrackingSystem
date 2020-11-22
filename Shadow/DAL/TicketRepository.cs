@@ -207,7 +207,7 @@ namespace Shadow.DAL
             var ticket = db.Tickets.FirstOrDefault(t => t.Id == ticketId);
             TicketComment comment = new TicketComment() { TicketId = ticketId, UserId = userId, Comment = commentText };
 
-            if(UserAndRolesRepository.CheckIfUserIsInRole(ticket.AssignedToUserId, "developer"))
+            if(UserAndRolesRepository.CheckIfUserIsInRole(ticket.AssignedToUserId, "developer") && !UserAndRolesRepository.CheckIfUserIsInRole(userId, "developer"))
             {
                 TicketNotification notification = new TicketNotification()
                 {
@@ -251,7 +251,7 @@ namespace Shadow.DAL
                 Description = description,
             };
 
-            if (UserAndRolesRepository.CheckIfUserIsInRole(ticket.AssignedToUserId, "developer"))
+            if (UserAndRolesRepository.CheckIfUserIsInRole(ticket.AssignedToUserId, "developer") && !UserAndRolesRepository.CheckIfUserIsInRole(userId, "developer"))
             {
                 TicketNotification notification = new TicketNotification()
                 {

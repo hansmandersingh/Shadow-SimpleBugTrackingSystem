@@ -31,6 +31,7 @@ namespace Shadow.Controllers
             ViewBag.UsersList = AdminBusinessLayer.GetAllUsers();
             if (result)
             {
+                ViewBag.Done = "Role has been assigned";
                 return View();
             }
             return RedirectToAction("Index");
@@ -47,6 +48,7 @@ namespace Shadow.Controllers
             ViewBag.UsersList = AdminBusinessLayer.GetAllUsers();
             if (result)
             {
+                ViewBag.Done = "Unassigned";
                 return View();
             }
             else

@@ -5,6 +5,8 @@
 
 <h2>UnAssignRole</h2>
 
+@ViewBag.Done
+
 @using (Html.BeginForm())
 {
     <h4>Select User from the List :</h4> @Html.DropDownList("userId", new SelectList(ViewBag.UsersList, "Id", "UserName", "Id"))

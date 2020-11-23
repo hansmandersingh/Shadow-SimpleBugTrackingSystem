@@ -78,6 +78,51 @@ namespace Shadow.Migrations
                     userManager.AddToRole(newUser.Id, "admin");
                 }
 
+                var projectMangerUser = userManager.FindByName("projectmanager@projectmanager.net");
+                if (projectMangerUser == null)
+                {
+                    var newUser = new ApplicationUser()
+                    {
+                        UserName = "projectmanager@projectmanager.net",
+                        Email = "projectmanager@projectmanager.net",
+                        PhoneNumber = "010101010101",
+                    };
+
+                    userManager.Create(newUser, "Password@1");
+                    userManager.SetLockoutEnabled(newUser.Id, false);
+                    userManager.AddToRole(newUser.Id, "project manager");
+                }
+
+                var developerUser = userManager.FindByName("developer@developer.net");
+                if (developerUser == null)
+                {
+                    var newUser = new ApplicationUser()
+                    {
+                        UserName = "developer@developer.net",
+                        Email = "developer@developer.net",
+                        PhoneNumber = "010101010101",
+                    };
+
+                    userManager.Create(newUser, "Password@1");
+                    userManager.SetLockoutEnabled(newUser.Id, false);
+                    userManager.AddToRole(newUser.Id, "developer");
+                }
+
+                var submitterUser = userManager.FindByName("submitter@submitter.net");
+                if (submitterUser == null)
+                {
+                    var newUser = new ApplicationUser()
+                    {
+                        UserName = "submitter@submitter.net",
+                        Email = "submitter@submitter.net",
+                        PhoneNumber = "010101010101",
+                    };
+
+                    userManager.Create(newUser, "Password@1");
+                    userManager.SetLockoutEnabled(newUser.Id, false);
+                    userManager.AddToRole(newUser.Id, "submitter");
+                }
+
                 //Seeding Ticket-- AddOns
                 var ticketTypes = context.TicketTypes.Any();
                 if(ticketTypes == false)

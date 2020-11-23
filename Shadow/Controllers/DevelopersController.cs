@@ -18,6 +18,10 @@ namespace Shadow.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
         DeveloperBusinessLayer DeveloperBusinessLayer = new DeveloperBusinessLayer();
 
+        public ActionResult Index()
+        {
+            return View();
+        }
         public ActionResult AllProject()
         {
             var projects = DeveloperBusinessLayer.AllProject(User.Identity.GetUserId());

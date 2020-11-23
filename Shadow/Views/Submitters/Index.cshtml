@@ -4,16 +4,21 @@
 }
 
 <h2>Submitter Dashboard</h2>
+<div class="row">
+    <div class="col-md-4">
+        <h3 class="btn btn-default">
+            @Html.ActionLink("Create a new Ticket", "CreateTicket", "Submitters")
+        </h3>
+    </div>
+    <div class="col-md-4">
+        <h3 class="btn btn-default">
+            @Html.ActionLink("View all projects in the system", "AllProjects", "Submitters")
+        </h3>
+    </div>
+    <div class="col-md-4">
+        <h3 class="btn btn-default">
+            @Html.ActionLink("Ticket Details", "GetAllTickets", "Submitters")
+        </h3>
+    </div>
+</div>
 
-<h3>
-    @Html.ActionLink("Create a new Ticket", "CreateTicket", "Submitters")
-
-</h3>
-
-<h3>
-    @Html.ActionLink("View all projects in the system", "AllProjects", "Submitters")
-</h3>
-
-<h3>
-    @Html.ActionLink("Show all tickets", "GetAllTickets", "Submitters")
-</h3>

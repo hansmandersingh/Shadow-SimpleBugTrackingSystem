@@ -4,36 +4,50 @@
 }
 
 <h2>Admin Dashboard</h2>
-
-
-<h3>
-    @Html.ActionLink("Assign roles", "AssignRoleToUser", "Admin")
-</h3>
-
-<h3>
-    @Html.ActionLink("UnAssign role from user", "UnAssignRole", "Admin")
-</h3>
-
-<h3>
-    @Html.ActionLink("Create a new project", "CreateAProject", "Admin")
-</h3>
-
-<h3>
-    @Html.ActionLink("View all my projects", "AllProjectsByUser", "Admin")
-</h3>
-
-<h3>
-    @Html.ActionLink("View all projects in the system", "AllProjects", "Admin")
-</h3>
-
-<h3>
-    @Html.ActionLink("Assign user to a project", "AssignToProject", "Admin")
-</h3>
-
-<h3>
-    @Html.ActionLink("UnAssign user from a project", "UnAssignFromProject", "Admin")
-</h3>
-
-<h3>
-    @Html.ActionLink("Get all tickets", "GetAllTickets", "Admin")
-</h3>
+<div class="row">
+    <div class="col-md-4">
+        <h1 class="btn btn-default">
+            @Html.ActionLink("Assign roles", "AssignRoleToUser", "Admin")
+        </h1>
+    </div>
+    <div class="col-md-4">
+        <h1 class="btn btn-default">
+            @Html.ActionLink("UnAssign role from user", "UnAssignRole", "Admin")
+        </h1>
+    </div>
+    <div class="col-md-4">
+        <h1 class="btn btn-default">
+            @Html.ActionLink("Create a new project", "CreateAProject", "Admin")
+        </h1>
+    </div>
+    <div class="col-md-4">
+        <h1 class="btn btn-default">
+            @Html.ActionLink("View all my projects", "AllProjectsByUser", "Admin")
+        </h1>
+    </div>
+    <div class="col-md-4">
+        <h1 class="btn btn-default">
+            @Html.ActionLink("View all projects in the system", "AllProjects", "Admin")
+        </h1>
+    </div>
+    <div class="col-md-4">
+        <h1 class="btn btn-default">
+            @Html.ActionLink("Assign user to a project", "AssignToProject", "Admin")
+        </h1>
+    </div>
+    <div class="col-md-4">
+        <h1 class="btn btn-default">
+            @Html.ActionLink("UnAssign user from a project", "UnAssignFromProject", "Admin")
+        </h1>
+    </div>
+    <div class="col-md-4">
+        <h1 class="btn btn-default">
+            @Html.ActionLink("UnAssign user from a project", "UnAssignFromProject", "Admin")
+        </h1>
+    </div>
+    <div class="col-md-4">
+        <h1 class="btn btn-default">
+            @Html.ActionLink("Ticket Details", "GetAllTickets", "Admin")
+        </h1>
+    </div>
+</div>

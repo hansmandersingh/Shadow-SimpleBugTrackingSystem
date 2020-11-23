@@ -291,6 +291,5 @@ namespace Shadow.Controllers
             return View(AdminBusinessLayer.FullHistory(ticketId));
         }
 
-
     }
 }
